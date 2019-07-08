@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaOferenteSubEmpresa_subCobertura" columnCount="4" printOrder="Horizontal" pageWidth="536" pageHeight="40" columnWidth="134" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a2c526a6-71e9-4449-bea6-db8c974ec8d9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="5d25dda8-0990-4065-96a2-b9435846b5ad"/>
+	<parameter name="identificadorPrimarioDeLaEmpresa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT     dbo.departamento.nombre
+FROM         dbo.CoberturaTerritorio INNER JOIN
+                      dbo.departamento ON dbo.CoberturaTerritorio.identificadorDelDepartamento = dbo.departamento.identificadorDelDepartamento
+WHERE     (dbo.CoberturaTerritorio.estadoDeEliminacion = 0) AND (dbo.CoberturaTerritorio.identificadorPrimarioDeLaEmpresa = $P{identificadorPrimarioDeLaEmpresa})]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="134" height="14" uuid="b1578f26-9414-4378-be9e-f61b79cbe19a"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

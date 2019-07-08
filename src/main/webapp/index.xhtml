@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Inicio de Sesi&oacute;n</title>
+            <link href="#{request.contextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+
+            <style>
+                .boderSombra{
+                    -webkit-box-shadow:rgba(135,206,250,0.5) 0px 0px 0px 20px;
+                    box-shadow:rgba(135,206,250,0.5) 0px 0px 0px 20px;
+                }
+
+                .etiquetas{
+                    text-align:right;
+                }
+
+            </style>
+
+            <!--script type="text/javascript">
+                /**
+                * JSF Validator
+                */
+               PrimeFaces.validator['custom.emailValidator'] = {
+    
+                   pattern: /\S+@\S+/,
+    
+                   validate: function(element, value) {
+                       //use element.data() to access validation metadata, in this case there is none.
+                       if(!this.pattern.test(value)) {
+                           throw {
+                               summary: 'Error',
+                               detail: value + ' no es un E-Mail valido.'
+                           }
+                       }
+                   }
+               };
+            </script-->
+        </h:head>
+        <h:body>
+            <h:form id="frmPrincipal">
+                <p:growl id="growl" showDetail="true" sticky="false">
+                    <p:autoUpdate/>
+                </p:growl>
+
+                <h:panelGrid columns="1" >
+                    <h:panelGrid columns="3" >
+                        <p:graphicImage url="#{request.contextPath}/../resources/images/logo.png"/>
+                        <p:spacer width="50" height="8"/>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Registro de" style="font-size: 26px; color: white; font-weight: bold;"/>            
+                            <p:outputLabel value="Ofertantes y Contratistas" style="font-size: 26px; color: white; font-weight: bold;"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <p:separator style="width: 1024px;" />
+                </h:panelGrid>
+                <p:spacer width="10" height="75"/>
+                <h:panelGrid columns="3" style="margin: 0 auto;" >
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/proveedores.png"/>
+                    <p:spacer width="50" height="10"/>
+                    <h:panelGrid columns="1" cellspacing="15" cellpadding="0" style="background-color: #bedcee;" styleClass="ui-corner-all boderSombra">
+                        <p:outputLabel value="Iniciar sesión" style="font-size: 24px; color: white; font-weight: bold"/>
+
+                        <p:outputPanel id="opnlSesion">
+                            <h:panelGrid columns="3" id="pngCredenciales">
+                                <p:graphicImage url="#{request.contextPath}/../resources/images/usuario.png"/>
+                                <p:outputLabel value="Usuario:"  style="font-size: 12px; color: #0035c6; " />
+                                <p:inputText id="txtUsuario" value="#{validacionUsuarioBean.usuario}" />
+                                <p:graphicImage url="#{request.contextPath}/../resources/images/lock.gif"/>
+                                <h:outputText value="Contraseña:" style="font-size: 12px; color: #0035c6;"/>
+                                <p:password id="txtClave" value="#{validacionUsuarioBean.claveDeAcceso}"/>
+                            </h:panelGrid>
+                            <p:commandButton value="Ingresar" style="width: 230px; height: 35px;" action="#{validacionUsuarioBean.validarCredencialesDeAcceso}"
+                                             ajax="true" partialSubmit="true" process="@this,opnlSesion" update="growl" />
+                        </p:outputPanel>
+                        <h:panelGrid columns="3">
+                            <p:commandLink value="¿Olvido contraseña?" onclick="PF('dlgOlvidoContrasenha').show();" process="@this"/>
+                            <p:spacer width="20" height="10" />
+                            <p:commandLink value="Nuevo Oferente" onclick="PF('dlgNuevoUsuario').show();" process="@this"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+
+                <p:spacer width="8" height="75" />
+                <p:separator style="width: 1024px;" />
+
+                <p:dialog id="registroUsuario" header="Creación de una nueva cuenta" widgetVar="dlgNuevoUsuario" modal="true" draggable="false" closable="false" maximizable="false" visible="#{validacionUsuarioBean.mostrarSignUp}">
+
+                    <p:panel footer="(*) Campos obligatorios">
+                        <h:panelGrid columns="2" columnClasses="etiquetas" >
+                            <p:outputLabel value="Primer Nombre: (*) " for="txtPrimerNombre" />
+                            <p:inputText id="txtPrimerNombre" value="#{validacionUsuarioBean.currentUsuario.primerNombre}" size="25" maxlength="100" />
+                            <p:outputLabel value="Segundo Nombre:" for="txtSegundoNombre" />
+                            <p:inputText id="txtSegundoNombre" value="#{validacionUsuarioBean.currentUsuario.segundoNombre}" size="25" maxlength="100"/>
+                            <p:outputLabel value="Primer Apellido: (*) " for="txtPrimerApellido" />
+                            <p:inputText id="txtPrimerApellido" value="#{validacionUsuarioBean.currentUsuario.primerApellido}"  size="25" maxlength="100"/>
+                            <p:outputLabel value="Segundo Apellido:" for="txtSegundoApellido" />
+                            <p:inputText id="txtSegundoApellido" value="#{validacionUsuarioBean.currentUsuario.segundoApellido}" size="25" maxlength="100"/>
+                            <p:outputLabel value="Teléfono: (*) " for="txtTelefono" />
+                            <p:inputMask id="txtTelefono" mask="99999999" value="#{validacionUsuarioBean.currentUsuario.telefono}"  size="10" maxlength="10"/>
+                            <p:outputLabel value="Correo electronico: (*) " for="txtEmail" />
+                            <p:inputText id="txtEmail" value="#{validacionUsuarioBean.currentUsuario.EMail}"  size="25" maxlength="50">
+                                <!--f:validator validatorId="custom.emailValidator" /-->
+                            </p:inputText>
+                            <p:outputLabel value="Usuario: (*) " for="txtUsuarioDeAcceso" />
+                            <h:panelGroup>
+                                <p:watermark value="Mínimo 8 caracteres" for="txtUsuarioDeAcceso"/>
+                                <p:inputText id="txtUsuarioDeAcceso" value="#{validacionUsuarioBean.currentUsuario.userName}"  size="25"  maxlength="50"/>
+                            </h:panelGroup>
+                            <p:outputLabel value="Contraseña: (*) " for="txtPass" />
+                            <h:panelGroup>
+                                <p:watermark value="Mínimo 8 caracteres" for="txtPass"/>
+                                <p:inputText id="txtPass" value="#{validacionUsuarioBean.currentUsuario.password}"  size="25" maxlength="50" />
+                            </h:panelGroup>
+                            <p:outputLabel value="Pregunta secreta 1:" for="cbPregunta1" />
+                            <p:selectOneMenu id="cbPregunta1" value="#{validacionUsuarioBean.currentUsuario.idPregunta1}">
+                                <f:selectItems value="#{validacionUsuarioBean.lstPreguntas}" var="pregunta" itemValue="#{pregunta.idPregunta}" itemLabel="#{pregunta.descripcionPregunta}" />
+                                <p:ajax update="cbPregunta2" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Respuesta pregunta 1: (*) " for="txtRespuesta1" />
+                            <p:inputText id="txtRespuesta1" value="#{validacionUsuarioBean.currentUsuario.respuesta1}" maxlength="100" />
+                            <p:outputLabel value="Pregunta secreta 2:" for="cbPregunta2" />
+                            <p:selectOneMenu id="cbPregunta2" value="#{validacionUsuarioBean.currentUsuario.idPregunta2}">
+                                <f:selectItems value="#{validacionUsuarioBean.lstPreguntas2}" var="pregunta2" itemValue="#{pregunta2.idPregunta}" itemLabel="#{pregunta2.descripcionPregunta}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Respuesta pregunta 2: (*) " for="txtRespuesta2" />
+                            <p:inputText id="txtRespuesta2" value="#{validacionUsuarioBean.currentUsuario.respuesta2}"  maxlength="100"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    <br/>
+                    <h:panelGrid columns="4">
+                        <p:spacer width="18" height="8"/>
+                        <p:commandButton value="Aceptar" icon="ui-icon-check" ajax="true" action="#{validacionUsuarioBean.nuevoUsuario}" 
+                                         update="growl" partialSubmit="true" process="@this,txtPrimerNombre,txtSegundoNombre,txtPrimerApellido,txtSegundoApellido,txtTelefono,txtEmail,txtUsuarioDeAcceso,txtPass,cbPregunta1,txtRespuesta1,cbPregunta2,txtRespuesta2" 
+                                         style="width: 130px; height: 25px;" />
+                        <p:spacer width="20" height="8"/>
+                        <p:commandButton value="Cancelar" icon="ui-icon-closethick" style="width: 130px; height: 25px;" onclick="dlgNuevoUsuario.hide();" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <p:dialog id="dlgRecuperarContra"  header="¿Ha olvidado su contraseña?" widgetVar="dlgOlvidoContrasenha" modal="true" draggable="false" resizable="false" closable="false" maximizable="false" visible="#{validacionUsuarioBean.mostrarRecuperarCont}">
+
+                    <p:panel style="width: 440px;">
+                        <h:outputText value="Cuando digite su correo electronico, recibira la nueva clave de acceso." />
+                        <br /><br />
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Ingrese su correo electrónico:" for="txtMail" />
+                            <p:inputText id="txtMail"  size="30" value="#{validacionUsuarioBean.email}">
+                                <p:ajax event="change" update="lblPregunta1 lblPregunta2" listener="#{validacionUsuarioBean.buscarUsuarioPreguntas}" />
+                            </p:inputText>
+                            <p:outputLabel value="Pregunta 1:"/>
+                            <p:outputLabel id="lblPregunta1" value="#{validacionUsuarioBean.pregunta1}" />
+                            <p:outputLabel value="Respuesta 1:"/>
+                            <p:inputText value="#{validacionUsuarioBean.respuesta1}"/>
+                            <p:outputLabel value="Pregunta 2:" />
+                            <p:outputLabel id="lblPregunta2" value=" #{validacionUsuarioBean.pregunta2}" />
+                            <p:outputLabel value="Respuesta 2:"/>
+                            <p:inputText value="#{validacionUsuarioBean.respuesta2}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    <br/>
+                    <h:panelGrid columns="4">
+                        <p:spacer width="50" height="8"/>
+                        <p:commandButton value="Aceptar" action="#{validacionUsuarioBean.comprobarRespuestas}" icon="ui-icon-check" style="width: 130px; height: 25px;" process="@this"/>
+                        <p:spacer width="20" height="8"/>
+                        <p:commandButton value="Cancelar" icon="ui-icon-closethick" style="width: 130px; height: 25px;" onclick="PF('dlgOlvidoContrasenha').hide();" process="@this"/>
+                    </h:panelGrid>
+                </p:dialog>
+                <div style="text-align:center;" >
+                    <h:outputText value="Ministerio de Educación Ciencia y Tecnología, El Salvador, C.A." style="font-size: 15px; color: white; font-weight: bold;"/>
+                </div>
+            </h:form>
+            <br />
+        </h:body>
+    </f:view>
+</html>

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <p:panel id="pnlPersona">
+        <f:facet name="header">
+            <p:graphicImage url="#{request.contextPath}/../resources/images/representante_14.png" />
+            <p:spacer width="10"/>
+            <h:outputText value="1 - Persona o Representante Legal"/>
+        </f:facet>
+        <p:panelGrid columns="6" columnClasses="col2,col2,col2,col2,col2,col2"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Genero: *" for="cbGenero"/>
+            <p:selectOneMenu id="cbGenero" value="#{registroBean.currentPersona.identificadorDeGenero}" disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Seleccione un genero"/>
+                <f:selectItems value="#{registroBean.lstGeneros}" var="gen" itemLabel="#{gen.descripcionDelGenero}" itemValue="#{gen.identificadorDeGenero}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Origen: *" for="cbOrigen" />
+            <p:selectOneMenu id="cbOrigen" value="#{registroBean.currentPersona.identificadorOrigenlCiudadano}" disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Seleccione un origen"/>
+                <f:selectItems value="#{registroBean.lstOrigenCiudadano}" var="org" itemLabel="#{org.descripcionDeCiudadania}" itemValue="#{org.identificadorOrigenlCiudadano}"/>
+                <p:ajax update="cbDepaPersona cbMuniPersona" listener="#{registroBean.tipoOrigen}"/>
+            </p:selectOneMenu>
+            <p:spacer width="10"/>
+            <p:spacer width="10"/>
+
+            <p:outputLabel value="Primer Nombre: *" for="txtPriNombre"/>
+            <p:inputText id="txtPriNombre" value="#{registroBean.currentPersona.primerNombre}" onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="Segundo Nombre:" for="txtSegNombre"/>
+            <p:inputText id="txtSegNombre" value="#{registroBean.currentPersona.segundoNombre}" onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:spacer width="10"/>
+            <p:spacer width="10"/>
+
+            <p:outputLabel value="Primer Apellido: *" for="txtPriApellido"/>
+            <p:inputText id="txtPriApellido" value="#{registroBean.currentPersona.primerApellido}"  onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="Segundo Apellido:" for="txtSegApellido"/>
+            <p:inputText id="txtSegApellido" value="#{registroBean.currentPersona.segundoApellido}" onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="Apellido Casada:" for="txtApeCasada"/>
+            <p:inputText id="txtApeCasada" value="#{registroBean.currentPersona.ACasada}" onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="150"/>
+        </p:panelGrid>
+        <p:panelGrid columns="6" columnClasses="col2,col4,col2,col1,col2,col1"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Domicilio: *" for="txtDomicilio" />
+            <p:inputText id="txtDomicilio" size="64" value="#{registroBean.currentPersona.domicilio}" onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula" disabled="#{registroBean.disable}" maxlength="500"/>
+            <p:outputLabel value="Teléfono: *" for="txtTelPersona" />
+            <p:inputMask id="txtTelPersona" size="8" value="#{registroBean.currentPersona.numeroTelefono}" mask="99999999" onkeypress="return textoMinuscula(this);" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="Celular:" for="txtCelular" />
+            <p:inputMask id="txtCelular" size="8" value="#{registroBean.currentPersona.numeroCelular}" mask="99999999" onkeypress="return textoMinuscula(this);"  disabled="#{registroBean.disable}" maxlength="150"/>
+        </p:panelGrid>
+        <p:panelGrid columns="6" columnClasses="col2,col2,col2,col2,col2,col2"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Departamento: *" for="cbDepaPersona" />     
+            <p:selectOneMenu id="cbDepaPersona" value="#{registroBean.currentPersona.identificadorDelDepartamento}" disabled="#{registroBean.mostrarDeptoMunicPersona}">
+                <f:selectItem itemLabel="Seleccione un departamento"/>
+                <f:selectItems value="#{registroBean.lstDepaPer}" var="dep" itemLabel="#{dep.nombre}" itemValue="#{dep.identificadorDelDepartamento}"/>
+                <p:ajax update="cbMuniPersona"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Municipio: *" for="cbMuniPersona" />
+            <p:selectOneMenu id="cbMuniPersona" value="#{registroBean.currentPersona.idMunicipio}" disabled="#{registroBean.mostrarDeptoMunicPersona}">
+                <f:selectItem itemLabel="Seleccione un municipio"/>
+                <f:selectItems value="#{registroBean.lstMunPer}" var="mun" itemLabel="#{mun.nombre}" itemValue="#{mun.id_municipio}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Cantón:" for="txtCanton" />
+            <p:inputText id="txtCanton" size="20" value="#{registroBean.currentPersona.canton}" onkeypress="return textoMinuscula(this);" styleClass="textoMinuscula" disabled="#{registroBean.disable}" maxlength="100"/>
+        </p:panelGrid>
+        <p:panelGrid columns="6" columnClasses="col2,col2,col2,col2,col2,col2"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Fecha nac.:" for="clFechaNac" />
+            <p:calendar id="clFechaNac" size="10" pattern="dd/MM/yyyy" navigator="true" value="#{registroBean.currentPersona.fechaDeNacimiento}" disabled="#{registroBean.disable}" converterMessage="Debe ingresar una fecha valida DD/MM/YYYY" maxlength="10"/>
+            <p:outputLabel value="Lectura firma:" for="txtLecturaFirma" />
+            <p:inputText id="txtLecturaFirma" size="10" value="#{registroBean.currentPersona.lecturaDeFirma}" disabled="#{registroBean.disable}" maxlength="250"/>                                        
+            <p:spacer width="10" />
+            <p:spacer width="10" />
+
+            <p:outputLabel value="Tipo de doc.: *" for="cbTipoDoc" />
+            <p:selectOneMenu id="cbTipoDoc" value="#{registroBean.currentPersona.identificadorDeDocumentoLegal}" disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Seleccione un tipo"/>
+                <f:selectItems value="#{registroBean.lstTipoDocLegal}" var="tipoD" itemLabel="#{tipoD.descripcionDeDocumentoLegal}" itemValue="#{tipoD.identificadorDeDocumentoLegal}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Num. doc.: *" for="txtNumDoc" />
+            <p:inputText id="txtNumDoc" size="10" value="#{registroBean.currentPersona.numeroDocumentoLegal}" disabled="#{registroBean.disable}" maxlength="9"/>
+            <p:outputLabel value="Luga y fecha exp.:" for="txtLugarFecha" />
+            <p:inputText id="txtLugarFecha" size="20" value="#{registroBean.currentPersona.lugarYFechaExpedicion}" disabled="#{registroBean.disable}" maxlength="250"/>
+
+            <p:outputLabel value="19. N.I.T.:" for="txtNitPersona" />
+            <p:inputMask id="txtNitPersona" size="17" mask="99999999999999" value="#{registroBean.currentPersona.numeroDeNit}" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="20. Profesión:" for="txtProfesion" />
+            <p:inputText id="txtProfesion" value="#{registroBean.currentPersona.profesion}" disabled="#{registroBean.disable}" maxlength="150"/>
+            <p:outputLabel value="21. Correo electrónico:" for="txtEMailPersona" />
+            <p:inputText id="txtEMailPersona" size="20" value="#{registroBean.currentPersona.EMail}" required="true" requiredMessage="Es necesario el correo electrónico" onkeypress="return textoMinuscula(this);" styleClass="textoMinuscula" disabled="#{registroBean.disable}" maxlength="200"/>
+        </p:panelGrid>
+        <f:facet name="footer">
+            <p:outputLabel value="(*) Campos obligatorios"/>
+        </f:facet>
+    </p:panel>
+</ui:composition>

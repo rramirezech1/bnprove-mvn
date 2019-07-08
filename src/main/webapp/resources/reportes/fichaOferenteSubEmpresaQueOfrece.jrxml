@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaOferenteSubEmpresaQueOfrece" pageWidth="535" pageHeight="400" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f260ca29-22ce-4d90-a911-a9b03630f737">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="identificadorPrimarioDeLaEmpresa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT     dbo.ClasificacionEmpresaEconomico.especializacionPorSubsector
+FROM         dbo.Empresa INNER JOIN
+                      dbo.ClasificacionEmpresaEconomico ON 
+                      dbo.Empresa.identificadorPrimarioDeLaEmpresa = dbo.ClasificacionEmpresaEconomico.identificadorPrimarioDeLaEmpresa
+WHERE     (dbo.Empresa.identificadorPrimarioDeLaEmpresa = $P{identificadorPrimarioDeLaEmpresa})]]>
+	</queryString>
+	<field name="especializacionPorSubsector" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="535" height="14" uuid="0534b273-3d7f-45a2-93a0-970b058063fe"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especializacionPorSubsector}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

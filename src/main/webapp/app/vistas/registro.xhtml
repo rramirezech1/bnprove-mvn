@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <script type="text/javascript">
+                    /**
+                     * JSF Validator
+                     */
+                    PrimeFaces.validator['custom.emailValidator'] = {
+                        pattern: /\S+@\S+/,
+                        validate: function (element, value) {
+                            //use element.data() to access validation metadata, in this case there is none.
+                            if (!this.pattern.test(value)) {
+                                throw {
+                                    summary: 'Error',
+                                    detail: value + ' no es un E-Mail valido.'
+                                }
+                            }
+                        }
+                    };
+                </script>
+                <link href="#{request.contextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+                <style>
+                    .menu1 span:first-child  {
+                        width: 170px;
+                    }
+                    .menu2 span:first-child  {
+                        width: 100px;
+                    }
+                    .ui-wizard-step-title {
+                        font-size:14px !important;
+                    }
+
+                    .ui-dialog{
+                        top: 50px !important;
+                    }
+                </style>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form id="frmPrincipal">
+
+                <p:growl id="growl" showDetail="true" sticky="false" escape="false">
+                    <p:autoUpdate />
+                </p:growl>
+
+                <p:menubar id="mbar">
+                    <f:facet name="options">
+                        <p:outputLabel value="Usuario: "/>
+                        <p:outputLabel value="#{registroBean.usuario}" style="font-weight: bold;"/>
+                        <p:spacer width="10" height="8"/>
+                        <p:outputLabel value="Estado:" />
+                        <p:outputLabel value="#{registroBean.estadoRegistro}" style="font-weight: bold;" />
+                        <p:spacer width="10" height="8"/>
+                        <p:commandButton value="Imprimir ficha" icon="imprimir" onclick="this.form.target = '_blank';" action="#{registroBean.imprimir}" ajax="false" update="growl pnlProductos mbar pnlLstProductos">
+                            <f:setPropertyActionListener target="#{registroBean.idEmpresa}" value="#{registroBean.currentEmpresa.identificadorPrimarioDeLaEmpresa}" />
+                        </p:commandButton>
+                        <p:spacer width="10" height="8"/>
+                        <p:commandButton value="Guardar" icon="guardar" action="#{registroBean.guardar}" ajax="true" validateClient="true" process="@this" update="growl pnlProductos mbar pnlLstProductos" />
+                        <p:spacer width="10" height="8"/>
+                        <p:commandButton value="Salir" icon="salir" action="#{validacionUsuarioBean.logout}" process="@this"/>
+                    </f:facet>
+                </p:menubar>
+
+                <p:dialog widgetVar="dlgPersonas" closable="true" width="1000" resizable="false">
+                    <f:facet name="header">
+                        <h:outputText value="#{registroBean.tituloWizard}" id="tituloWizard"/>
+                    </f:facet>
+                    <p:wizard flowListener="#{registroBean.onFlowProcess}" id="wzRegistro" widgetVar="wzRegistro" nextLabel="Siguiente" backLabel="Atras" 
+                              showStepStatus="false">
+                        <p:tab title="1 - Persona o Representante Legal" id="paso1">
+                            <ui:include src="/app/vistas/fragmentos/datosGeneralesPersona.xhtml"/>
+                        </p:tab>
+
+                        <p:tab title="2 - Empresa" id="paso2">
+                            <ui:include src="/app/vistas/fragmentos/datosGeneralesEmpresa.xhtml"/>
+                        </p:tab>
+
+                        <p:tab title="3 - Ubicación" id="paso3">
+                            <p:panel id="pnlUbicacion" header="3 - Ubicación">
+                                <f:facet name="header">
+                                    <p:graphicImage url="#{request.contextPath}/../resources/images/map.png" />
+                                    <p:spacer width="10"/>
+                                    <h:outputText value="Ubicación"/>
+                                </f:facet>
+
+                                <h:outputText value="INSTRUCCIONES:" /><br />
+                                <h:outputText value="- Seleccione cada uno de los departamentos en los que desea participar" />
+                                <p:separator/>
+                                <br />
+                                <p:selectManyCheckbox layout="grid" columns="3"  id="smcUbicacion" value="#{registroBean.departamentosUbicacion}" disabled="#{registroBean.disable}" valueChangeListener="#{registroBean.cambioUbicacion}">
+                                    <f:selectItem itemLabel="01. AHUACHAPAN" itemValue="1" />
+                                    <f:selectItem itemLabel="02. SANTA ANA"  itemValue="2"/>
+                                    <f:selectItem itemLabel="03. SONSONATE" itemValue="3"/>
+                                    <f:selectItem itemLabel="04. CHALATENANGO" itemValue="4"/>
+                                    <f:selectItem itemLabel="05. LA LIBERTAD" itemValue="5"/>
+                                    <f:selectItem itemLabel="06. SAN SALVADOR" itemValue="6"/>
+                                    <f:selectItem itemLabel="07. CUSCATLAN" itemValue="7"/>
+                                    <f:selectItem itemLabel="08. LA PAZ" itemValue="8"/>
+                                    <f:selectItem itemLabel="09. CABAÑAS" itemValue="9"/>
+                                    <f:selectItem itemLabel="10. SAN VICENTE" itemValue="10"/>
+                                    <f:selectItem itemLabel="11. USULUTAN" itemValue="11"/>
+                                    <f:selectItem itemLabel="12. SAN MIGUEL" itemValue="12"/>
+                                    <f:selectItem itemLabel="13. MORAZAN" itemValue="13"/>
+                                    <f:selectItem itemLabel="14. LA UNION" itemValue="14"/>
+                                    <f:selectItem itemLabel="00. TODO EL PAIS" itemValue="15"/>
+                                    <p:ajax update="smcUbicacion" />
+                                </p:selectManyCheckbox>
+
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="4 - Que Ofrece" id="paso4">
+                            <p:panel id="pnlProductos" header="Que Ofrece">
+                                <f:facet name="header">
+                                    <p:graphicImage url="#{request.contextPath}/../resources/images/product.png" />
+                                    <p:spacer width="10"/>
+                                    <h:outputText value="Que Ofrece"/>
+                                </f:facet>
+                                <p:panelGrid columns="2" columnClasses="col2,col10"
+                                             style="width: 100%; border:0px none; background-color:transparent;"
+                                             styleClass="form-group ui-panelgrid-blank">
+                                    <p:outputLabel value="Sector Economico:" for="cbSectorEconomico"/>
+                                    <p:selectOneMenu id="cbSectorEconomico" disabled="#{registroBean.disable}" value="#{registroBean.idSector}">
+                                        <f:selectItem itemLabel="Seleccione un Sector"/>
+                                        <f:selectItems value="#{registroBean.lstSectorEconomico}" var="sec" itemValue="#{sec.identificadorDelSectorEconomico}" itemLabel="#{sec.descripcionDelSectorEconomico}"/>
+                                        <p:ajax update="cbSubSector" listener="#{registroBean.setLstSubSectorEconomico}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Sub-Sector:" for="cbSubSector"/>
+                                    <p:selectOneMenu id="cbSubSector" disabled="#{registroBean.disable}" value="#{registroBean.idSubSector}">
+                                        <f:selectItem itemLabel="Seleccione un sub-sector"/>
+                                        <f:selectItems value="#{registroBean.lstSubSector}" var="sec" itemValue="#{sec.identificadorDelSectorEconomico}" itemLabel="#{sec.descripcionDelSectorEconomico}"/>
+                                        <p:ajax update="txaEspecifique" listener="#{registroBean.activarEspecificacion}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Tipo de Servicio:" for="tipoServicio"/>
+                                    <p:selectManyCheckbox id="tipoServicio" value="#{registroBean.tipoServicio}">
+                                        <f:selectItem itemLabel="Bienes" itemValue="1" />
+                                        <f:selectItem itemLabel="Servicios" itemValue="2" />
+                                        <f:selectItem itemLabel="Obras Civiles" itemValue="3" />
+                                        <f:selectItem itemLabel="Consultorias" itemValue="4" />
+                                    </p:selectManyCheckbox>
+                                    <p:outputLabel value="Especifique:" for="txaEspecifique" />
+                                    <p:inputTextarea rows="3" cols="75" id="txaEspecifique" disabled="#{!registroBean.especificacion}" value="#{registroBean.espClasificacion}" maxlength="500" />
+                                </p:panelGrid>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" action="#{registroBean.agregarClasificacion}" update="tblOferta pnlProductos"/>
+                                </f:facet>
+                            </p:panel>
+
+                            <p:panel id="pnlLstProductos" header="Lista de Bienes y Servicios">
+                                <p:dataTable id="tblOferta" emptyMessage="Sin registros" value="#{registroBean.lstClasificacion}" var="clasificacion" tableStyle="table-layout: auto;">
+                                    <p:column headerText="Id">
+                                        <h:outputText value="#{clasificacion.identificadorClasificacionSectorEconomico}" />
+                                    </p:column>
+
+                                    <p:column headerText="Descripción">
+                                        <h:outputText value="#{clasificacion.especializacionPorSubsector}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                </p:dialog>
+
+                <div style="position: fixed; bottom: 50px; left: 50%; margin-left: auto; margin-left: -365px;" >
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/flecha_inicio.png"/>
+                    <p:commandLink actionListener="#{registroBean.abrirAsistente}" ajax="true" process="@this" >
+                        <p:graphicImage id="imgPaso1" url="#{registroBean.paso1}"/>
+                        <f:param name="opcion" value="0"/>
+                    </p:commandLink>
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/flecha.png"/>
+                    <p:commandLink actionListener="#{registroBean.abrirAsistente}" ajax="true" process="@this">
+                        <p:graphicImage id="imgPaso2" url="#{registroBean.paso2}" />
+                        <f:param name="opcion" value="1"/>
+                    </p:commandLink>
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/flecha.png"/>
+                    <p:commandLink actionListener="#{registroBean.abrirAsistente}" ajax="true" process="@this">
+                        <p:graphicImage id="imgPaso3" url="#{registroBean.paso3}" />
+                        <f:param name="opcion" value="2"/>
+                    </p:commandLink>
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/flecha.png"/>
+                    <p:commandLink actionListener="#{registroBean.abrirAsistente}" ajax="true" process="@this">
+                        <p:graphicImage id="imgPaso4" url="#{registroBean.paso4}" />
+                        <f:param name="opcion" value="3"/>
+                    </p:commandLink>
+                    <p:graphicImage url="#{request.contextPath}/../resources/images/flecha_fin.png"/>
+                    <br />
+                    <p:spacer width="48" height="10"/>
+                    <p:outputLabel value="Persona o Repre. Legal" style="font-size: 12px; font-weight: bold; color: white;"/>
+                    <p:spacer width="78" height="10"/>
+                    <p:outputLabel value="Empresa" style="font-size: 12px; font-weight: bold; color: white;"/>
+                    <p:spacer width="104" height="10"/>
+                    <p:outputLabel value="Ubicación" style="font-size: 12px; font-weight: bold; color: white;"/>
+                    <p:spacer width="104" height="10"/>
+                    <p:outputLabel value="Que Ofrece" style="font-size: 12px; font-weight: bold; color: white;"/>
+                </div>
+            </h:form>
+        </h:body>
+    </f:view>
+</html>

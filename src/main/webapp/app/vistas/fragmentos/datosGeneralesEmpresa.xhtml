@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <p:panel id="pnlEmpresa" footer="(*) Campos obligatorios" >
+        <f:facet name="header">
+            <p:graphicImage url="#{request.contextPath}/../resources/images/empresa_14.png" />
+            <p:spacer width="10"/>
+            <h:outputText value="Datos generales de la empresa"/>
+        </f:facet>
+        <p:panelGrid columns="8" columnClasses="col2,col2,col2,col2,col1,col1,col1,col1"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Personería: *" for="cbPersoneria" />             
+            <p:selectOneMenu id="cbPersoneria" value="#{registroBean.currentEmpresa.identificadorDePersoneria}" disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Seleccione una personería"/>
+                <f:selectItems value="#{registroBean.lstTipoDePersoneria}" var="tipoP" itemLabel="#{tipoP.descripcionDePersoneria}" itemValue="#{tipoP.identificadorDePersoneria}"/>
+                <p:ajax update="pnlPersoneria pnlEmpresa" listener="#{registroBean.tipoPersoneria}" />
+                <p:ajax event="valueChange" update="pnlPersoneria pnlEmpresa" listener="#{registroBean.cambioPersoneria}" />
+            </p:selectOneMenu>
+            <p:outputLabel value="País: *" for="cbPais"/>
+            <p:selectOneMenu id="cbPais" value="#{registroBean.currentEmpresa.pais}"  disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Seleccione un país"/>
+                <f:selectItems value="#{registroBean.lstPaises}" var="pais" itemLabel="#{pais.descripcion}" itemValue="#{pais.pais}" />
+                <p:ajax update="cbDepartamentoEmp cbMunicipioEmp" listener="#{registroBean.tipoDomicilio}" />
+            </p:selectOneMenu>
+            <p:outputLabel value="Es contribuyente:" for="chbContribuyente"/>
+            <p:selectBooleanCheckbox id="chbContribuyente" value="#{registroBean.currentEmpresa.contribuyente}"/>
+            <p:outputLabel value="No I.V.A.:" for="txtIva"/>
+            <p:inputText id="txtIva" size="7" value="#{registroBean.currentEmpresa.numeroIVA}" disabled="#{registroBean.disable}" maxlength="20"/>
+        </p:panelGrid>
+
+        <p:panelGrid columns="2" columnClasses="col2,col10"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Giro comercial:" for="txtGiro" />
+            <p:inputText id="txtGiro" style="width: 100%;" value="#{registroBean.currentEmpresa.giroEmpresa}" disabled="#{registroBean.disable}" maxlength="500"/>
+        </p:panelGrid>
+
+        <p:panelGrid columns="8" columnClasses="col2,col2,col2,col2,col1,col1,col1,col1"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="No ISSS Patronal:" for="txtIsssEmp" />
+            <p:inputText id="txtIsssEmp" value="#{registroBean.currentEmpresa.numeroIsssPatronal}" disabled="#{registroBean.disable}" maxlength="25"/>
+            <p:outputLabel value="No Reg. Comercio:" for="txtRegComer" />
+            <p:inputText id="txtRegComer" value="#{registroBean.currentEmpresa.numeroDeRegistroDeComercio}" disabled="#{registroBean.disable}" maxlength="75"/>
+            <p:outputLabel value="Tamaño de Empresa: *" for="cbClasificacion"/>
+            <p:selectOneMenu id="cbClasificacion" value="#{registroBean.currentEmpresa.clasificacionEmpresaTamano}"  disabled="#{registroBean.disable}">
+                <f:selectItem itemLabel="Clasificacion Empresa"/>
+                <f:selectItems value="#{registroBean.lstClasificacionEmpresaTamano}" var="tamano" itemLabel="#{tamano.descripcionEmpresaTamano}" itemValue="#{tamano.identificadorEmpresaTamano}" />
+            </p:selectOneMenu>
+        </p:panelGrid>
+
+        <p:panelGrid columns="2" columnClasses="col2,col10"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="Nombre Comercial:" for="txtNomComer"/>
+            <p:inputText id="txtNomComer" style="width: 100%;" value="#{registroBean.currentEmpresa.nombreComercial}" disabled="#{registroBean.disable}" maxlength="250"/>
+
+            <p:outputLabel value="Dirección: *" for="txtDireccion"/>
+            <p:inputText id="txtDireccion" style="width: 100%;" value="#{registroBean.currentEmpresa.direccionCompleta}" disabled="#{registroBean.disable}" maxlength="500"  onkeypress="return textoMayuscula(this);" styleClass="textoMayuscula"/>
+        </p:panelGrid>
+
+        <p:panelGrid columns="6" columnClasses="col2,col2,col2,col2,col2,col2"
+                     style="width: 100%; border:0px none; background-color:transparent;"
+                     styleClass="form-group ui-panelgrid-blank">
+            <p:outputLabel value="11. Departamento: " for="cbDepartamentoEmp" />
+            <p:selectOneMenu id="cbDepartamentoEmp" value="#{registroBean.currentEmpresa.identificadorDelDepartamento}" disabled="#{registroBean.mostrarDeptoMunic}">
+                <f:selectItem itemLabel="Seleccione un departamento"/>
+                <f:selectItems value="#{registroBean.lstDepaEmp}"  var="depa" itemLabel="#{depa.nombre}" itemValue="#{depa.identificadorDelDepartamento}"/>
+                <p:ajax update="cbMunicipioEmp" />
+            </p:selectOneMenu>
+            <p:outputLabel value="12. Municipio: " for="cbMunicipioEmp" />
+            <p:selectOneMenu id="cbMunicipioEmp" value="#{registroBean.currentEmpresa.idMunicipio}" disabled="#{registroBean.mostrarDeptoMunic}">
+                <f:selectItem itemLabel="Seleccione un municipio"/>
+                <f:selectItems value="#{registroBean.lstMunEmp}"  var="mun" itemLabel="#{mun.nombre}" itemValue="#{mun.id_municipio}"/>
+            </p:selectOneMenu>
+            <p:spacer width="10"/>
+            <p:spacer width="10"/>
+
+            <p:outputLabel value="13. Teléfono:" for="txtTelefonoEmp" />
+            <p:inputText id="txtTelefonoEmp" size="8" value="#{registroBean.currentEmpresa.telefonos}" disabled="#{registroBean.disable}" maxlength="75"/>
+            <p:outputLabel value="14. Fax:" for="txtFax" />
+            <p:inputText id="txtFax" value="#{registroBean.currentEmpresa.fax}" disabled="#{registroBean.disable}" maxlength="75"/>
+            <p:outputLabel value="15. Celular.:" for="txtCelularEmp" />
+            <p:inputMask id="txtCelularEmp" size="15" mask="99999999" value="#{registroBean.currentEmpresa.numeroDeCelular}" disabled="#{registroBean.disable}" maxlength="75"/>
+        </p:panelGrid>
+    </p:panel>
+
+    <p:panel id="pnlPersoneria" footer="(*) Campos obligatorios" visible="#{registroBean.mostrarPnlJuridica}" >
+        <f:facet name="header">
+            <p:graphicImage url="#{request.contextPath}/../resources/images/maletin_14.png" />
+            <p:spacer width="10"/>
+            <h:outputText value="Persona Jurídica"/>
+        </f:facet>
+
+        <h:panelGrid columns="5">
+            <p:outputLabel value="a. Razon Social:" for="txtRazonSocial" />
+            <p:inputText id="txtRazonSocial" size="75" value="#{registroBean.currentEmpresa.razonSocial}" disabled="#{registroBean.disable}" maxlength="250"/>
+
+            <p:spacer width="10"/>
+            <p:outputLabel value="b. Abrev. según escritura:" for="txtAbreviatura" />
+            <p:inputText id="txtAbreviatura" value="#{registroBean.currentEmpresa.abreviaturaSegunEscritura}" disabled="#{registroBean.disable}" maxlength="150"/>
+
+            <p:outputLabel value="c. Fecha constitución:" for="clFechaCons" />
+            <h:panelGrid columns="8">
+                <p:calendar id="clFechaCons" size="7" pattern="dd/MM/yyyy" navigator="true" value="#{registroBean.currentEmpresa.fechaDeConstitucion}" disabled="#{registroBean.disable}" maxlength="10" converterMessage="Debe ingresar una fecha valida DD/MM/YYYY"/>
+                <p:spacer width="10"/>
+                <p:outputLabel value="d. Regimen de Administración:" for="cbRegimen" />
+                <p:selectOneMenu id="cbRegimen" value="#{registroBean.currentEmpresa.regimenDeAdministracion}" disabled="#{registroBean.disable}">
+                    <f:selectItem itemLabel="Seleccione un regimen"/>
+                    <f:selectItems value="#{registroBean.lstRegimenAdmon}" var="regA" itemValue="#{regA.identificadorDelRegimenDeAdmon}" itemLabel="#{regA.descripcionDelRegimenAdmon}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <p:spacer width="10"/>
+            <p:outputLabel value="e. N.I.T.:" for="txtNitEmp" />
+            <p:inputMask id="txtNitEmp" size="17" mask="99999999999999" value="#{registroBean.currentEmpresa.numeroDeNit}" disabled="#{registroBean.disable}" maxlength="150"/>
+
+            <p:outputLabel value="f. Sito Web:" for="txtWebEmp" />
+            <p:inputText id="txtWebEmp" size="50" value="#{registroBean.currentEmpresa.sitioWeb}" disabled="#{registroBean.disable}" maxlength="250"/>
+            <!--p:spacer width="10"/-->
+            <p:outputLabel value="g. Correo electrónico:" for="txtEmailEmp" />
+            <p:inputText id="txtEmailEmp" size="25" value="#{registroBean.currentEmpresa.correoElectronico}" disabled="#{registroBean.disable}" maxlength="100">
+            </p:inputText>
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>

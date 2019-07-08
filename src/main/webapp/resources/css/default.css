@@ -1,0 +1,82 @@
+body {
+    width:1024px;
+    margin:0 auto;
+    background-image: url(../images/macback.png);
+    font-size:70%;
+    padding:0;
+}
+
+.textoMayuscula {
+    text-transform: uppercase;
+}
+
+.textoMinuscula {
+    text-transform: lowercase;
+}
+
+/*
+ICONOS
+*/
+.nuevo{
+    background:url('../images/nuevo.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+.modificar{
+    background:url('../images/modificar.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+.recuperar{
+    background:url('../images/recuperar.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+.imprimir{
+    background:url('../images/imprimir.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+.guardar{
+    background:url('../images/guardar.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+.salir{
+    background:url('../images/salir.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
+
+/*
+ESTILOS PARA TABLAS
+*/
+.alineadoTop td {
+    vertical-align: top; 
+}
+
+.alineadoMiddle td {
+    vertical-align: middle; 
+}
+
+.ui-wizard-step-title {
+    font-size: 12px !important;
+}
+.col12{width: 100%;}
+.col11{width: 91.67%;}
+.col10{width: 83.33%;}
+.col9{width: 75%;}
+.col8{width: 66.67%;}
+.col7{width: 58.33%;}
+.col6{width: 50%;}
+.col5{width: 41.67%;}
+.col4{width: 33.33%;}
+.col3{width: 25%;}
+.col2{width: 16.67%;}
+.col1{width: 8.33%;}
