@@ -492,7 +492,7 @@ public class RegistroBean {
             valido = JsfUtil.addErrorStyle("frmPrincipal", "cbOrigen", SelectOneMenu.class, currentPersona.getIdentificadorOrigenlCiudadano()) && valido;
             valido = JsfUtil.addErrorStyle("frmPrincipal", "cbTipoDoc", SelectOneMenu.class, currentPersona.getIdentificadorDeDocumentoLegal()) && valido;
             valido = JsfUtil.addErrorStyle("frmPrincipal", "txtNumDoc", InputText.class, currentPersona.getNumeroDocumentoLegal()) && valido;
-            valido = JsfUtil.addErrorStyle("frmPrincipal", "txtNitPersona", InputText.class, validaNit(currentPersona.getNumeroDeNit())) && valido;
+            valido = JsfUtil.addErrorStyle("frmPrincipal", "txtNitPersona", InputMask.class, currentPersona.getNumeroDeNit()) && valido;
             if (currentPersona.getIdentificadorOrigenlCiudadano() == 1) {
                 valido = JsfUtil.addErrorStyle("frmPrincipal", "cbDepaPersona", SelectOneMenu.class, currentPersona.getIdentificadorDelDepartamento()) && valido;
                 valido = JsfUtil.addErrorStyle("frmPrincipal", "cbMuniPersona", SelectOneMenu.class, currentPersona.getIdMunicipio()) && valido;
