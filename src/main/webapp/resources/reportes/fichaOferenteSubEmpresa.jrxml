@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaOferenteSubEmpresa" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="10b767c9-ad4e-4e18-bb48-ba1493af0a2e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="6"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -26,7 +26,7 @@
 	<subDataset name="Table Dataset 1" uuid="ebad88b3-bccc-4bd6-9b6e-8b9f660a0090"/>
 	<subDataset name="dataset1" uuid="58aae621-aa26-40e4-8fdc-b85c97ecb357"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\RAREcheverria\\Desktop\\bnprove-mvn\\src\\main\\webapp\\resources\\reportes\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="identificadorPrimarioDeLaEmpresa" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -234,7 +234,7 @@ RegimenDeAdministracion ON Empresa.regimenDeAdministracion = RegimenDeAdministra
 					<subreportParameterExpression><![CDATA[$P{identificadorPrimarioDeLaEmpresa}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fichaOferenteSubEmpresa_subCobertura.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["fichaOferenteSubEmpresa_subCobertura.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="3" y="275" width="540" height="63" uuid="67b208cf-54af-4a14-9dc5-c8e97410f526"/>
@@ -245,7 +245,7 @@ RegimenDeAdministracion ON Empresa.regimenDeAdministracion = RegimenDeAdministra
 					<subreportParameterExpression><![CDATA[$P{identificadorPrimarioDeLaEmpresa}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fichaOferenteSubEmpresaQueOfrece.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["fichaOferenteSubEmpresaQueOfrece.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="3" y="56" width="102" height="22" forecolor="#736343" uuid="4d3127be-3080-474e-8eec-39f96a4bcc8b"/>

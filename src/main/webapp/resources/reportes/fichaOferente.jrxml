@@ -14,7 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\RAREcheverria\\Desktop\\bnprove-mvn\\src\\main\\webapp\\resources\\reportes\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="identificadorPrimarioDeLaEmpresa" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -572,7 +572,7 @@ WHERE    (dbo.Empresa.identificadorPrimarioDeLaEmpresa = $P{identificadorPrimari
 					<subreportParameterExpression><![CDATA[$P{identificadorPrimarioDeLaEmpresa}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fichaOferenteSubEmpresa.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["fichaOferenteSubEmpresa.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="492" y="38" width="52" height="20" uuid="5fa37c5b-5dcc-4f51-979d-d9c69e9e1541"/>
@@ -602,7 +602,7 @@ WHERE    (dbo.Empresa.identificadorPrimarioDeLaEmpresa = $P{identificadorPrimari
 			</staticText>
 			<image>
 				<reportElement x="19" y="0" width="57" height="51" uuid="d6932e6c-1062-4b06-8b08-87a0453f26f2"/>
-				<imageExpression><![CDATA["C:\\Users\\RAREcheverria\\Desktop\\bnprove-mvn\\bnprove-mvn\\src\\main\\webapp\\resources\\images\\escudo_azul.png"]]></imageExpression>
+				<imageExpression><![CDATA["..\\images\\escudo_azul.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
