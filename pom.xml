@@ -6,7 +6,7 @@
     <groupId>sv.gob.mined.apps</groupId>
     <artifactId>bnprove-mvn</artifactId>
     <packaging>war</packaging>
-    <version>1.01</version>
+    <version>1.02</version>
 
     <name>bnprove-mvn</name>
     <url>http://maven.apache.org</url>
