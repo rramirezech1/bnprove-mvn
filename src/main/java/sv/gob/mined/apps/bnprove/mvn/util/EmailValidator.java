@@ -3,7 +3,6 @@ package sv.gob.mined.apps.bnprove.mvn.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-import sv.gob.mined.apps.bnprove.mvn.util.JsfUtil;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
