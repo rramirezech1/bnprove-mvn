@@ -64,7 +64,7 @@
                             <f:setPropertyActionListener target="#{registroBean.idEmpresa}" value="#{registroBean.currentEmpresa.identificadorPrimarioDeLaEmpresa}" />
                         </p:commandButton>
                         <p:spacer width="10" height="8"/>
-                        <p:commandButton value="Guardar" icon="guardar" action="#{registroBean.guardar}" ajax="true" validateClient="true" process="@this" update="growl pnlProductos mbar pnlLstProductos" />
+                        <p:commandButton value="Guardar" icon="guardar" action="#{registroBean.guardar}" ajax="true" validateClient="true" process="@this, pnlPersona, pnlEmpresa, pnlUbicacion, pnlProductos, pnlLstProductos" update="growl pnlProductos mbar pnlLstProductos" />
                         <p:spacer width="10" height="8"/>
                         <p:commandButton value="Salir" icon="salir" action="#{validacionUsuarioBean.logout}" process="@this"/>
                     </f:facet>

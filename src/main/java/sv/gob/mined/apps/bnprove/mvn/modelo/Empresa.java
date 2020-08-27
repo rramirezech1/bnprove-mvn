@@ -14,32 +14,32 @@ import sv.gob.mined.apps.bnprove.mvn.dao.PersistenciaDao;
 public class Empresa implements PersistenciaDao {
 
     private Integer identificadorPrimarioDeLaEmpresa;
-    private java.lang.String nombreComercial;
-    private java.lang.String razonSocial;
-    private java.lang.String numeroDeNit;
-    private java.lang.String direccionCompleta;
-    private java.lang.String numeroIVA;
-    private java.lang.String numeroIsssPatronal;
-    private java.lang.String numeroDeRegistroDeComercio;
-    private java.lang.String estadoOProvincia;
-    private java.lang.String razonSocialSegunEscritura;
-    private java.lang.String abreviaturaSegunEscritura;
-    private java.util.Date fechaDeConstitucion;
+    private String nombreComercial;
+    private String razonSocial;
+    private String numeroDeNit;
+    private String direccionCompleta;
+    private String numeroIva;
+    private String numeroIsssPatronal;
+    private String numeroDeRegistroDeComercio;
+    private String estadoOProvincia;
+    private String razonSocialSegunEscritura;
+    private String abreviaturaSegunEscritura;
+    private Date fechaDeConstitucion;
     private Integer regimenDeAdministracion;
-    private java.lang.String correoElectronico;
-    private java.lang.String sitioWeb;
-    private java.lang.String telefonos;
-    private java.lang.String fax;
-    private java.lang.String numeroDeCelular;
+    private String correoElectronico;
+    private String sitioWeb;
+    private String telefonos;
+    private String fax;
+    private String numeroDeCelular;
     private Integer tipoDeEstablecimiento;
     private Integer esContribuyente;
     private Integer estadoDeRegistro = 1;
     private Integer identificadorDePersoneria;
-    private java.util.Date fechaDeInsercion;
-    private java.util.Date fechaDeModificacion;
-    private java.util.Date fechaDeEliminacion;
+    private Date fechaDeInsercion;
+    private Date fechaDeModificacion;
+    private Date fechaDeEliminacion;
     private Integer estadoDeEliminacion;
-    private java.lang.String name;
+    private String name;
     private Integer identificadorDelDepartamento;
     private Integer idMunicipio;
     private Integer identificadorPrimarioOferente;
@@ -91,12 +91,12 @@ public class Empresa implements PersistenciaDao {
         this.direccionCompleta = direccionCompleta;
     }
 
-    public String getNumeroIVA() {
-        return numeroIVA;
+    public String getNumeroIva() {
+        return numeroIva;
     }
 
-    public void setNumeroIVA(String numeroIVA) {
-        this.numeroIVA = numeroIVA;
+    public void setNumeroIva(String numeroIva) {
+        this.numeroIva = numeroIva;
     }
 
     public String getNumeroIsssPatronal() {
@@ -314,12 +314,12 @@ public class Empresa implements PersistenciaDao {
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{identificadorPrimarioOferente, nombreComercial, razonSocial, numeroDeNit, direccionCompleta, numeroIVA, numeroIsssPatronal, numeroDeRegistroDeComercio, estadoOProvincia, razonSocialSegunEscritura, abreviaturaSegunEscritura, fechaDeConstitucion, regimenDeAdministracion, correoElectronico, sitioWeb, telefonos, fax, numeroDeCelular, tipoDeEstablecimiento, esContribuyente, estadoDeRegistro, identificadorDePersoneria, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorDelDepartamento, idMunicipio, pais, giroEmpresa, clasificacionEmpresaTamano};
+        return new Object[]{identificadorPrimarioOferente, nombreComercial, razonSocial, numeroDeNit, direccionCompleta, numeroIva, numeroIsssPatronal, numeroDeRegistroDeComercio, estadoOProvincia, razonSocialSegunEscritura, abreviaturaSegunEscritura, fechaDeConstitucion, regimenDeAdministracion, correoElectronico, sitioWeb, telefonos, fax, numeroDeCelular, tipoDeEstablecimiento, esContribuyente, estadoDeRegistro, identificadorDePersoneria, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorDelDepartamento, idMunicipio, pais, giroEmpresa, clasificacionEmpresaTamano};
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{identificadorPrimarioOferente, nombreComercial, razonSocial, numeroDeNit, direccionCompleta, numeroIVA, numeroIsssPatronal, numeroDeRegistroDeComercio, estadoOProvincia, razonSocialSegunEscritura, abreviaturaSegunEscritura, fechaDeConstitucion, regimenDeAdministracion, correoElectronico, sitioWeb, telefonos, fax, numeroDeCelular, tipoDeEstablecimiento, esContribuyente, estadoDeRegistro, identificadorDePersoneria, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorDelDepartamento, idMunicipio, pais, giroEmpresa, clasificacionEmpresaTamano, identificadorPrimarioDeLaEmpresa};
+        return new Object[]{identificadorPrimarioOferente, nombreComercial, razonSocial, numeroDeNit, direccionCompleta, numeroIva, numeroIsssPatronal, numeroDeRegistroDeComercio, estadoOProvincia, razonSocialSegunEscritura, abreviaturaSegunEscritura, fechaDeConstitucion, regimenDeAdministracion, correoElectronico, sitioWeb, telefonos, fax, numeroDeCelular, tipoDeEstablecimiento, esContribuyente, estadoDeRegistro, identificadorDePersoneria, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorDelDepartamento, idMunicipio, pais, giroEmpresa, clasificacionEmpresaTamano, identificadorPrimarioDeLaEmpresa};
     }
 
     public String getPais() {

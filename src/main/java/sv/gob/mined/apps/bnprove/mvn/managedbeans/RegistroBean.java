@@ -62,7 +62,7 @@ public class RegistroBean {
     private Integer idDepto;
     private Persona currentPersona;
     private Empresa currentEmpresa;
-    private List<String> departamentosUbicacion = new ArrayList<String>();
+    private List<String> departamentosUbicacion = new ArrayList<>();
     private List<CoberturaTerritorio> lstCobertura;
     private List<SectorEconomico> lstSubSector;
     private List<ClasificacionEmpresaEconomico> lstClasificacion;
@@ -141,10 +141,10 @@ public class RegistroBean {
 
     private void cargarCobertura(Integer idEmpresa) {
         lstCobertura = provBo.findAllCobertura(idEmpresa);
-        departamentosUbicacion = new ArrayList<String>();
+        departamentosUbicacion = new ArrayList<>();
 
         if (lstCobertura == null) {
-            lstCobertura = new ArrayList<CoberturaTerritorio>();
+            lstCobertura = new ArrayList<>();
         } else {
             for (CoberturaTerritorio coberturaTerritorio : lstCobertura) {
                 departamentosUbicacion.add(coberturaTerritorio.getIdentificadorDelDepartamento().toString());
@@ -432,7 +432,7 @@ public class RegistroBean {
                 clasificacion.setTipoServicio(tipoServicio);
                 clasificacion.setName("admin");
                 
-                if (tipoServicio.size() != 0){
+                if (!tipoServicio.isEmpty()){
                     lstClasificacion.add(clasificacion);
                 }else{
                     JsfUtil.addErrorStyle("frmPrincipal", "tipoServicio", InputText.class, clasificacion.getTipoServicio());
@@ -509,7 +509,7 @@ public class RegistroBean {
             valido = JsfUtil.addErrorStyle("frmPrincipal", "cbPais", SelectOneMenu.class, currentEmpresa.getPais()) && valido;
 
             if (currentEmpresa.getContribuyente()) {
-                valido = JsfUtil.addErrorStyle("frmPrincipal", "txtIva", InputText.class, currentEmpresa.getNumeroIVA()) && valido;
+                valido = JsfUtil.addErrorStyle("frmPrincipal", "txtNoIva", InputText.class, currentEmpresa.getNumeroIva()) && valido;
             }
             if ("SV".equals(currentEmpresa.getPais())) {
                 valido = JsfUtil.addErrorStyle("frmPrincipal", "cbDepartamentoEmp", SelectOneMenu.class, currentEmpresa.getIdentificadorDelDepartamento()) && valido;
@@ -870,7 +870,7 @@ public class RegistroBean {
 
     public List<ClasificacionEmpresaEconomico> getLstClasificacion() {
         if (lstClasificacion == null) {
-            lstClasificacion = new ArrayList<ClasificacionEmpresaEconomico>();
+            lstClasificacion = new ArrayList<>();
         }
         return lstClasificacion;
     }
@@ -885,7 +885,7 @@ public class RegistroBean {
     
     public List<CoberturaTerritorio> getLstCobertura() {
         if (lstCobertura == null) {
-            lstCobertura = new ArrayList<CoberturaTerritorio>();
+            lstCobertura = new ArrayList<>();
         }
         return lstCobertura;
     }
