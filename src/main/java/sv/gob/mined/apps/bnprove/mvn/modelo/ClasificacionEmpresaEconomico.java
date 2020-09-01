@@ -4,6 +4,7 @@
  */
 package sv.gob.mined.apps.bnprove.mvn.modelo;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import sv.gob.mined.apps.bnprove.mvn.dao.PersistenciaDao;
@@ -22,7 +23,7 @@ public class ClasificacionEmpresaEconomico implements PersistenciaDao{
     private Date fechaDeModificacion;
     private Date fechaDeEliminacion;
     private Integer estadoDeEliminacion;
-    private List<String> tipoServicio;
+    private String[] tipoServicio;
     private String name;
     
 
@@ -101,15 +102,14 @@ public class ClasificacionEmpresaEconomico implements PersistenciaDao{
         this.identificadorPrimarioDeLaEmpresa = identificadorPrimarioDeLaEmpresa;
     }
 
-    public List<String> getTipoServicio() {
+    public String[] getTipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(List<String> tipoServicio) {
+    public void setTipoServicio(String[] tipoServicio) {
+        System.out.println(Arrays.toString(tipoServicio));
         this.tipoServicio = tipoServicio;
-    }
-    
-    
+    } 
     
     @Override
     public String generarInsertSQL() {

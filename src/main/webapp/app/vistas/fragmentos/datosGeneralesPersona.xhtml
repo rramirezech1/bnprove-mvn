@@ -15,12 +15,12 @@
                      styleClass="form-group ui-panelgrid-blank">
             <p:outputLabel value="Genero: *" for="cbGenero"/>
             <p:selectOneMenu id="cbGenero" value="#{registroBean.currentPersona.identificadorDeGenero}" disabled="#{registroBean.disable}">
-                <f:selectItem itemLabel="Seleccione un genero"/>
+                <f:selectItem itemLabel="Seleccione un genero" itemValue="1"/>
                 <f:selectItems value="#{registroBean.lstGeneros}" var="gen" itemLabel="#{gen.descripcionDelGenero}" itemValue="#{gen.identificadorDeGenero}"/>
             </p:selectOneMenu>
             <p:outputLabel value="Origen: *" for="cbOrigen" />
             <p:selectOneMenu id="cbOrigen" value="#{registroBean.currentPersona.identificadorOrigenlCiudadano}" disabled="#{registroBean.disable}">
-                <f:selectItem itemLabel="Seleccione un origen"/>
+                <f:selectItem itemLabel="Seleccione un origen" itemValue="1"/>
                 <f:selectItems value="#{registroBean.lstOrigenCiudadano}" var="org" itemLabel="#{org.descripcionDeCiudadania}" itemValue="#{org.identificadorOrigenlCiudadano}"/>
                 <p:ajax update="cbDepaPersona cbMuniPersona" listener="#{registroBean.tipoOrigen}"/>
             </p:selectOneMenu>

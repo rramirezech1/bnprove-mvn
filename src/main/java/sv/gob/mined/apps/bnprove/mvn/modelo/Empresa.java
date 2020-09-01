@@ -80,7 +80,11 @@ public class Empresa implements PersistenciaDao {
     }
 
     public void setNumeroDeNit(String numeroDeNit) {
-        this.numeroDeNit = numeroDeNit;
+        if (numeroDeNit != null) {
+            this.numeroDeNit = numeroDeNit.replaceAll("\\W+", "");
+        } else {
+            this.numeroDeNit = numeroDeNit;
+        }
     }
 
     public String getDireccionCompleta() {
@@ -96,7 +100,12 @@ public class Empresa implements PersistenciaDao {
     }
 
     public void setNumeroIva(String numeroIva) {
-        this.numeroIva = numeroIva;
+        if (numeroIva != null){
+            this.numeroIva = numeroIva.replaceAll("\\W+", "");
+        } else {
+            this.numeroIva = numeroIva;
+        }
+        
     }
 
     public String getNumeroIsssPatronal() {

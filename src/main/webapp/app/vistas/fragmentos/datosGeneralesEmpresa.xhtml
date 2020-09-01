@@ -29,7 +29,7 @@
             <p:outputLabel value="Es contribuyente:" for="chbContribuyente"/>
             <p:selectBooleanCheckbox id="chbContribuyente" value="#{registroBean.currentEmpresa.contribuyente}"/>
             <p:outputLabel value="No I.V.A.:" for="txtNoIva"/>
-            <p:inputText id="txtNoIva" value="#{registroBean.currentEmpresa.numeroIva}" disabled="#{registroBean.disable}"/>
+            <p:inputText id="txtNoIva" value="#{registroBean.currentEmpresa.numeroIva}" maxlength="9"  disabled="#{registroBean.disable}"/>
         </p:panelGrid>
 
         <p:panelGrid columns="2" columnClasses="col2,col10"

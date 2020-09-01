@@ -15,10 +15,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.PrimeFaces;
@@ -79,8 +81,9 @@ public class RegistroBean {
     private Short numPaso = 0;
     private DefaultTreeNode arbol;
     private Boolean especificacion = false;
+    private Boolean disableGuardar = true;
     private SectorEconomico subSector;
-    private List<String> tipoServicio;
+    private String[] tipoServicio;
     private String hostname, smtp_port, user, pass, remitente;
     /**
      * variables de funcionalidad
@@ -181,19 +184,23 @@ public class RegistroBean {
         } else {
             if (event.getNewStep().equals("paso1")) {
                 tituloWizard = "1 - Persona o Representante Legal";
+                disableGuardar = true;
             }
             if (event.getNewStep().equals("paso2")) {
                 tituloWizard = "2 - Empresa";
+                disableGuardar = true;
             }
             if (event.getNewStep().equals("paso3")) {
                 tituloWizard = "3 - Ubicación";
+                disableGuardar = false;
             }
             if (event.getNewStep().equals("paso4")) {
                 tituloWizard = "4 - Que Ofrece";
+                disableGuardar = false;
             }
             if (event.getOldStep().equals("paso4")) {
             }
-
+            PrimeFaces.current().ajax().update("frmPrincipal:btnGuardar");
             PrimeFaces.current().ajax().update("frmPrincipal:tituloWizard");
             //RequestContext.getCurrentInstance().update("frmPrincipal:tituloWizard");
             return event.getNewStep();
@@ -432,7 +439,7 @@ public class RegistroBean {
                 clasificacion.setTipoServicio(tipoServicio);
                 clasificacion.setName("admin");
                 
-                if (!tipoServicio.isEmpty()){
+                if (tipoServicio != null){
                     lstClasificacion.add(clasificacion);
                 }else{
                     JsfUtil.addErrorStyle("frmPrincipal", "tipoServicio", InputText.class, clasificacion.getTipoServicio());
@@ -598,6 +605,16 @@ public class RegistroBean {
         pass =        "aaa";
         remitente =   "aaaa";
     } 
+        
+    public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().clear();
+        ExternalContext externalContext = context.getExternalContext();
+        Object session = externalContext.getSession(true);
+        HttpSession httpSession = (HttpSession) session;
+        httpSession.invalidate();
+        return JsfUtil.LOGOUT_PAGE_REDIRECT;
+    }
 
     public Integer getIdDepto() {
         return idDepto;
@@ -902,11 +919,11 @@ public class RegistroBean {
         this.especificacion = especificacion;
     }
 
-    public List<String> getTipoServicio() {
+    public String[] getTipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(List<String> tipoServicio) {
+    public void setTipoServicio(String[] tipoServicio) {
         this.tipoServicio = tipoServicio;
     }
 
@@ -993,5 +1010,14 @@ public class RegistroBean {
     public void setRemitente(String remitente) {
         this.remitente = remitente;
     }
+
+    public Boolean getDisableGuardar() {
+        return disableGuardar;
+    }
+
+    public void setDisableGuardar(Boolean disableGuardar) {
+        this.disableGuardar = disableGuardar;
+    }
+    
     
 }

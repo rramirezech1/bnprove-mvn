@@ -12,9 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 public class JsfUtil {
@@ -24,6 +26,7 @@ public class JsfUtil {
     public static final String sIdPersona = "sIdPersona";
     public static final String PATH_REPORTES = File.separator + "resources" + File.separator + "reportes" + File.separator;
     public static final String PATH_IMAGENES = File.separator + "resources" + File.separator + "imagenes" + File.separator;
+    public static final String LOGOUT_PAGE_REDIRECT = "/index.jsf?faces-redirect=true";
 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();

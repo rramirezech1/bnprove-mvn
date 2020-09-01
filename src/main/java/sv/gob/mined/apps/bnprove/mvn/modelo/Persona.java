@@ -12,7 +12,7 @@ import sv.gob.mined.apps.bnprove.mvn.dao.PersistenciaDao;
  *
  * @author Infosoft
  */
-public class Persona implements PersistenciaDao, Serializable{
+public class Persona implements PersistenciaDao, Serializable {
 
     private Integer identificadorDeLaPersona;
     private Integer identificadorDeGenero;
@@ -112,7 +112,12 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setNumeroDeDui(String numeroDeDui) {
-        this.numeroDeDui = numeroDeDui;
+        if (numeroDeDui != null) {
+            this.numeroDeDui = numeroDeDui.replaceAll("\\W+", "");
+        } else {
+            this.numeroDeDui = numeroDeDui;
+        }
+
     }
 
     public String getNumeroDeNit() {
@@ -120,7 +125,12 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setNumeroDeNit(String numeroDeNit) {
-        this.numeroDeNit = numeroDeNit;
+        if (numeroDeNit != null) {
+            this.numeroDeNit = numeroDeNit.replaceAll("\\W+", "");
+        } else {
+            this.numeroDeNit = numeroDeNit;
+        }
+
     }
 
     public String getNumeroTelefono() {
@@ -128,7 +138,11 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setNumeroTelefono(String numeroTelefono) {
-        this.numeroTelefono = numeroTelefono;
+        if (numeroTelefono != null) {
+            this.numeroTelefono = numeroTelefono.replaceAll("\\W+", "");
+        } else {
+            this.numeroTelefono = numeroTelefono;
+        }
     }
 
     public String getNumeroCelular() {
@@ -136,7 +150,11 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
+        if (numeroCelular != null) {
+            this.numeroCelular = numeroCelular.replaceAll("\\W+", "");
+        } else {
+            this.numeroCelular = numeroCelular;
+        }
     }
 
     public String getDomicilio() {
@@ -216,7 +234,11 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setTelefonoOficina(String telefonoOficina) {
-        this.telefonoOficina = telefonoOficina;
+        if (telefonoOficina != null) {
+            this.telefonoOficina = telefonoOficina.replaceAll("\\W+", "");
+        } else {
+            this.telefonoOficina = telefonoOficina;
+        }
     }
 
     public String getEstadoOProvincia() {
@@ -240,7 +262,11 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setNumeroDocumentoLegal(String numeroDocumentoLegal) {
-        this.numeroDocumentoLegal = numeroDocumentoLegal;
+        if (numeroDocumentoLegal != null) {
+            this.numeroDocumentoLegal = numeroDocumentoLegal.replaceAll("\\W+", "");
+        } else {
+            this.numeroDocumentoLegal = numeroDocumentoLegal;
+        }
     }
 
     public String getLugarYFechaExpedicion() {
@@ -330,7 +356,7 @@ public class Persona implements PersistenciaDao, Serializable{
     public void setIdentificadorPrimarioOferente(Integer identificadorPrimarioOferente) {
         this.identificadorPrimarioOferente = identificadorPrimarioOferente;
     }
-    
+
     public Integer getIdentificadorDelDepartamento() {
         return identificadorDelDepartamento;
     }
@@ -346,11 +372,10 @@ public class Persona implements PersistenciaDao, Serializable{
     }
 
     public void setIdMunicipio(Integer idMunicipio) {
-         if (idMunicipio != null) {
+        if (idMunicipio != null) {
             this.idMunicipio = idMunicipio;
         }
     }
-
 
     @Override
     public String toString() {
@@ -381,16 +406,16 @@ public class Persona implements PersistenciaDao, Serializable{
     public Object[] getDatosInsert() {
         return new Object[]{identificadorDeGenero, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaDeNacimiento, numeroDeDui, numeroDeNit, numeroTelefono, numeroCelular,
             domicilio, identificadorDeDocumentoLegal, profesion, aCasada, eMail, inactivo, canton, direccionOficina,
-            telefonoOficina, estadoOProvincia, lecturaDeFirma, numeroDocumentoLegal, lugarYFechaExpedicion, isssPersonal, sitioWeb, name, userName, 
-            fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, lugarEntregaDocumentos, identificadorPrimarioOferente,identificadorOrigenlCiudadano, identificadorDelDepartamento, idMunicipio};
+            telefonoOficina, estadoOProvincia, lecturaDeFirma, numeroDocumentoLegal, lugarYFechaExpedicion, isssPersonal, sitioWeb, name, userName,
+            fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, lugarEntregaDocumentos, identificadorPrimarioOferente, identificadorOrigenlCiudadano, identificadorDelDepartamento, idMunicipio};
     }
-    
+
     @Override
     public Object[] getDatosUpdate() {
         return new Object[]{identificadorDeGenero, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaDeNacimiento, numeroDeDui, numeroDeNit, numeroTelefono, numeroCelular,
             domicilio, identificadorDeDocumentoLegal, profesion, aCasada, eMail, inactivo, canton, direccionOficina,
-            telefonoOficina, estadoOProvincia, lecturaDeFirma, numeroDocumentoLegal, lugarYFechaExpedicion, isssPersonal, sitioWeb, name, userName, 
-            fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, lugarEntregaDocumentos, identificadorPrimarioOferente, identificadorOrigenlCiudadano,identificadorDelDepartamento, idMunicipio, identificadorDeLaPersona};
+            telefonoOficina, estadoOProvincia, lecturaDeFirma, numeroDocumentoLegal, lugarYFechaExpedicion, isssPersonal, sitioWeb, name, userName,
+            fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, lugarEntregaDocumentos, identificadorPrimarioOferente, identificadorOrigenlCiudadano, identificadorDelDepartamento, idMunicipio, identificadorDeLaPersona};
     }
 
     public Integer getIdentificadorOrigenlCiudadano() {
