@@ -13,14 +13,14 @@
         <p:panelGrid columns="8" columnClasses="col2,col2,col2,col2,col1,col1,col1,col1"
                      style="width: 100%; border:0px none; background-color:transparent;"
                      styleClass="form-group ui-panelgrid-blank">
-            <p:outputLabel value="Personería: *" for="cbPersoneria" />             
+            <p:outputLabel value="Personería:*" for="cbPersoneria" />             
             <p:selectOneMenu id="cbPersoneria" value="#{registroBean.currentEmpresa.identificadorDePersoneria}" disabled="#{registroBean.disable}">
                 <f:selectItem itemLabel="Seleccione una personería"/>
                 <f:selectItems value="#{registroBean.lstTipoDePersoneria}" var="tipoP" itemLabel="#{tipoP.descripcionDePersoneria}" itemValue="#{tipoP.identificadorDePersoneria}"/>
                 <p:ajax update="pnlPersoneria pnlEmpresa" listener="#{registroBean.tipoPersoneria}" />
                 <p:ajax event="valueChange" update="pnlPersoneria pnlEmpresa" listener="#{registroBean.cambioPersoneria}" />
             </p:selectOneMenu>
-            <p:outputLabel value="País: *" for="cbPais"/>
+            <p:outputLabel value="País:*" for="cbPais"/>
             <p:selectOneMenu id="cbPais" value="#{registroBean.currentEmpresa.pais}"  disabled="#{registroBean.disable}">
                 <f:selectItem itemLabel="Seleccione un país"/>
                 <f:selectItems value="#{registroBean.lstPaises}" var="pais" itemLabel="#{pais.descripcion}" itemValue="#{pais.pais}" />

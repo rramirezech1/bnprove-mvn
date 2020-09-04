@@ -261,7 +261,7 @@ public class RegistroBean {
             currentEmpresa.setRazonSocial("");
             currentEmpresa.setRegimenDeAdministracion(1);
         }
-
+        PrimeFaces.current().ajax().update("pnlPersoneria");
     }
 
     public void abrirAsistente() {
