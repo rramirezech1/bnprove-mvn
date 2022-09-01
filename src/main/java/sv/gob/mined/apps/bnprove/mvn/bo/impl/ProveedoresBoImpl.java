@@ -122,6 +122,11 @@ public class ProveedoresBoImpl implements ProveedoresBo {
     }
 
     @Override
+    public SectorEconomico findSectorEconomico(Integer idSubSector) {
+        return sector.findByIdSector(idSubSector);
+    }
+    
+    @Override
     public List<SectorEconomico> findAllSubSectorEconomico(Integer idSector) {
         return sector.findAllSub(idSector);
     }

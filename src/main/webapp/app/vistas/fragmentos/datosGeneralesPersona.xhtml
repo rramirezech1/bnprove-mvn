@@ -22,7 +22,7 @@
             <p:selectOneMenu id="cbOrigen" value="#{registroBean.currentPersona.identificadorOrigenlCiudadano}" disabled="#{registroBean.disable}">
                 <f:selectItem itemLabel="Seleccione un origen" itemValue="1"/>
                 <f:selectItems value="#{registroBean.lstOrigenCiudadano}" var="org" itemLabel="#{org.descripcionDeCiudadania}" itemValue="#{org.identificadorOrigenlCiudadano}"/>
-                <p:ajax update="cbDepaPersona cbMuniPersona" listener="#{registroBean.tipoOrigen}"/>
+                <p:ajax update="cbDepaPersona cbMuniPersona txtCanton" listener="#{registroBean.tipoOrigen}"/>
             </p:selectOneMenu>
             <p:spacer width="10"/>
             <p:spacer width="10"/>
@@ -66,13 +66,13 @@
                 <f:selectItems value="#{registroBean.lstMunPer}" var="mun" itemLabel="#{mun.nombre}" itemValue="#{mun.id_municipio}"/>
             </p:selectOneMenu>
             <p:outputLabel value="Cantón:" for="txtCanton" />
-            <p:inputText id="txtCanton" size="20" value="#{registroBean.currentPersona.canton}" onkeypress="return textoMinuscula(this);" styleClass="textoMinuscula" disabled="#{registroBean.disable}" maxlength="100"/>
+            <p:inputText id="txtCanton" size="20" value="#{registroBean.currentPersona.canton}" onkeypress="return textoMinuscula(this);" styleClass="textoMinuscula" disabled="#{registroBean.mostrarDeptoMunicPersona}" maxlength="100"/>
         </p:panelGrid>
         <p:panelGrid columns="6" columnClasses="col2,col2,col2,col2,col2,col2"
                      style="width: 100%; border:0px none; background-color:transparent;"
                      styleClass="form-group ui-panelgrid-blank">
             <p:outputLabel value="Fecha nac.:" for="clFechaNac" />
-            <p:calendar id="clFechaNac" size="10" pattern="dd/MM/yyyy" navigator="true" value="#{registroBean.currentPersona.fechaDeNacimiento}" disabled="#{registroBean.disable}" converterMessage="Debe ingresar una fecha valida DD/MM/YYYY" maxlength="10"/>
+            <p:calendar id="clFechaNac" size="10" pattern="dd/MM/yyyy" navigator="true" value="#{registroBean.currentPersona.fechaDeNacimiento}" disabled="#{registroBean.disable}" converterMessage="Debe ingresar una fecha valida DD/MM/YYYY" maxlength="10" yearRange="-100:-17" />
             <p:outputLabel value="Lectura firma:" for="txtLecturaFirma" />
             <p:inputText id="txtLecturaFirma" size="10" value="#{registroBean.currentPersona.lecturaDeFirma}" disabled="#{registroBean.disable}" maxlength="250"/>                                        
             <p:spacer width="10" />
@@ -85,7 +85,7 @@
             </p:selectOneMenu>
             <p:outputLabel value="Num. doc.: *" for="txtNumDoc" />
             <p:inputText id="txtNumDoc" size="10" value="#{registroBean.currentPersona.numeroDocumentoLegal}" disabled="#{registroBean.disable}" maxlength="9"/>
-            <p:outputLabel value="Luga y fecha exp.:" for="txtLugarFecha" />
+            <p:outputLabel value="Lugar y fecha exp.:" for="txtLugarFecha" />
             <p:inputText id="txtLugarFecha" size="20" value="#{registroBean.currentPersona.lugarYFechaExpedicion}" disabled="#{registroBean.disable}" maxlength="250"/>
 
             <p:outputLabel value="19. N.I.T.:" for="txtNitPersona" />

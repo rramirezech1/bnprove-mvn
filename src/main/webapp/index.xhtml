@@ -43,6 +43,25 @@
             </script-->
         </h:head>
         <h:body>
+            
+             <h:form>
+                <p:idleMonitor onactive="PF('sessionTerminada').show();" timeout="#{session.maxInactiveInterval * 500}" >
+                    <p:ajax event="idle" listener="#{registroBean.logout}"/>
+                </p:idleMonitor>
+
+                <p:dialog header="Sesión caducada" widgetVar="sessionTerminada"
+                          modal="true" closable="false" width="400" visible="false" resizable="false">
+                    <h:panelGrid columns="1" style="vertical-align: middle; text-align: center;">
+                        <h:panelGrid columns="2" style="vertical-align: middle; text-align: center;">
+                            <h:outputText value="La sesión a caducado por inactividad, por favor, pulse sobre el siguiente botón para volver a acceder a la aplicación" />
+                            <p:graphicImage url="/resources/images/desconectado.png"  /> 
+                        </h:panelGrid>
+
+                        <p:commandButton id="confirmBackToLogin" type="button" value="Iniciar sesión" onclick="window.location = '#{request.contextPath}/inicio.jsp';"/>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+            
             <h:form id="frmPrincipal">
                 <p:growl id="growl" showDetail="true" sticky="false">
                     <p:autoUpdate/>
@@ -61,7 +80,7 @@
                 </h:panelGrid>
                 <p:spacer width="10" height="75"/>
                 <h:panelGrid columns="3" style="margin: 0 auto;" >
-                    <p:graphicImage url="#{request.contextPath}/../resources/images/proveedores.png"/>
+                    <!--p:graphicImage url="#{request.contextPath}/../resources/images/proveedores.png"/-->
                     <p:spacer width="50" height="10"/>
                     <h:panelGrid columns="1" cellspacing="15" cellpadding="0" style="background-color: #bedcee;" styleClass="ui-corner-all boderSombra">
                         <p:outputLabel value="Iniciar sesión" style="font-size: 24px; color: white; font-weight: bold"/>

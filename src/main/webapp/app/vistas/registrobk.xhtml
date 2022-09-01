@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <f:view encoding="UTF-8">
+    <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
                 <script type="text/javascript">
@@ -46,16 +46,24 @@
         </h:head>
 
         <h:body>
-             <h:form>
-                <p:idleMonitor onidle="PF('idleDialog').show();"  timeout="600000"/>
+            <h:form>
+                <p:idleMonitor onactive="PF('sessionTerminada').show();" timeout="#{session.maxInactiveInterval * 500}" >
+                    <p:ajax event="idle" listener="#{registroBean.logout}"/>
+                </p:idleMonitor>
 
-                <p:confirmDialog id="confirmDialog"  message="Sesion caducada, favor vuelva a ingresar" closable="false"
-                                 header="Sesión caducada" widgetVar="idleDialog">
-                    <p:commandButton id="Logout" value="Iniciar Sesión"
-                                     styleClass="btn btn-primary" ajax="false"
-                                     action="#{registroBean.logout}" />
-                </p:confirmDialog>
+                <p:dialog header="Sesión caducada" widgetVar="sessionTerminada"
+                          modal="true" closable="false" width="400" visible="false" resizable="false">
+                    <h:panelGrid columns="1" style="vertical-align: middle; text-align: center;">
+                        <h:panelGrid columns="2" style="vertical-align: middle; text-align: center;">
+                            <h:outputText value="La sesión a caducado por inactividad, por favor, pulse sobre el siguiente botón para volver a acceder a la aplicación" />
+                            <p:graphicImage url="/resources/images/desconectado.png"  /> 
+                        </h:panelGrid>
+
+                        <p:commandButton id="confirmBackToLogin" type="button" value="Iniciar sesión" onclick="window.location = '#{request.contextPath}/inicio.jsp';"/>
+                    </h:panelGrid>
+                </p:dialog>
             </h:form>
+            
             <h:form id="frmPrincipal">
 
                 <p:growl id="growl" showDetail="true" sticky="false" escape="false">
@@ -104,6 +112,7 @@
 
                                 <h:outputText value="INSTRUCCIONES:" /><br />
                                 <h:outputText value="- Seleccione cada uno de los departamentos en los que desea participar" />
+                                <h:outputText value="- Importante !!! Luego de seleccionar el o los departamentos GUARDE la información para pasar al siguiente paso" />
                                 <p:separator/>
                                 <br />
                                 <p:selectManyCheckbox layout="grid" columns="3"  id="smcUbicacion" value="#{registroBean.departamentosUbicacion}" disabled="#{registroBean.disable}" valueChangeListener="#{registroBean.cambioUbicacion}">
@@ -173,7 +182,7 @@
                                         <h:outputText value="#{clasificacion.identificadorClasificacionSectorEconomico}" />
                                     </p:column>
                                     <p:column headerText="Sector" width="300">
-                                        <h:outputText value="#{registroBean.getSector(clasificacion.identificadorDelSectorEconomico)}" />
+                                        <h:outputText value="#{clasificacion.especializacionPorSubsector}" />
                                     </p:column>
                                     <p:column headerText="Descripción">
                                         <h:outputText value="#{clasificacion.especializacionPorSubsector}" />

@@ -51,6 +51,8 @@ public interface ProveedoresBo {
     
     public List<SectorEconomico> findAllSectorEconomico();
     
+    public SectorEconomico findSectorEconomico(Integer idSubSector);
+    
     public List<SectorEconomico> findAllSubSectorEconomico(Integer idSector);
 
     public List<TipoDePersoneria> findAllTipoDePersoneria();

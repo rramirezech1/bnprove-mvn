@@ -34,4 +34,16 @@ public class SectorEconomicoDaoImpl extends XJdbcTemplate implements SectorEcono
         List<SectorEconomico> sector = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(SectorEconomico.class));
         return sector;
     }
+    
+    @Override
+    public SectorEconomico findByIdSector(Integer idSector) {
+               
+        String sql = "SELECT * FROM SECTORECONOMICO WHERE IDENTIFICADORDELSECTORECONOMICO=" + idSector;
+        SectorEconomico sector =(SectorEconomico)getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(SectorEconomico.class));
+        
+        String sql2 = "SELECT * FROM SECTORECONOMICO WHERE IDENTIFICADORDELSECTORECONOMICO=" + sector.getSec_identificadorDelSectorEconomico();
+        SectorEconomico sectorPadre = (SectorEconomico)getJdbcTemplate().queryForObject(sql2, new BeanPropertyRowMapper(SectorEconomico.class));
+                
+        return sectorPadre;
+    }
 }

@@ -15,4 +15,5 @@ public interface SectorEconomicoDao {
 
     public List<SectorEconomico> findAll();
     public List<SectorEconomico> findAllSub(Integer idSector);
+    public SectorEconomico findByIdSector(Integer idSector);
 }

@@ -6,9 +6,9 @@ package sv.gob.mined.apps.bnprove.mvn.managedbeans;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +92,7 @@ public class RegistroBean {
     private boolean mostrarPnlJuridica = false;
     private boolean mostrarDeptoMunic = false;
     private boolean mostrarDeptoMunicPersona = false;
+    private boolean mostrarIVA = true;
     private String paso1 = "../../resources/images/personas_enable.png";
     private String paso2 = "../../resources/images/empresa_enable.png";
     private String paso3 = "../../resources/images/ubicacion_enable.png";
@@ -121,7 +122,7 @@ public class RegistroBean {
                 currentPersona = provBo.findPersonaById(idPersona);
                 //idDepto = currentPersona.getIdentificadorDelDepartamento();
                 currentEmpresa = provBo.findEmpresaByIdOferente(currentPersona.getIdentificadorPrimarioOferente());
-
+             
                 if (currentEmpresa == null) {
                     currentEmpresa = new Empresa();
                     currentEmpresa.setEsContribuyente(0);
@@ -139,6 +140,7 @@ public class RegistroBean {
                     this.cargarOferta(currentEmpresa.getIdentificadorPrimarioDeLaEmpresa());
                 }
             }
+           abrirInicial();
         }
     }
 
@@ -223,8 +225,8 @@ public class RegistroBean {
         }
         else
         {
-            currentEmpresa.setIdentificadorDelDepartamento(null);
-            currentEmpresa.setIdMunicipio(null);
+            currentEmpresa.setIdentificadorDelDepartamento(0);
+            currentEmpresa.setIdMunicipio(0);
         } 
         
     }
@@ -236,7 +238,16 @@ public class RegistroBean {
             currentPersona.identificadorDelDepartamento = 16;
             currentPersona.idMunicipio = 266;
         }
+        else
+        {
+            currentPersona.identificadorDelDepartamento = 0;
+            currentPersona.idMunicipio = 0;
+        } 
         
+    }
+    
+    public void esContribuyente() {
+        mostrarIVA = mostrarIVA != true;
     }
 
     public void cambioPersoneria() {
@@ -264,6 +275,11 @@ public class RegistroBean {
         PrimeFaces.current().ajax().update("pnlPersoneria");
     }
 
+    public void abrirInicial(){
+        PrimeFaces.current().executeScript("PF('wzRegistro').loadStep(PF('wzRegistro').cfg.steps[0], false)");
+        PrimeFaces.current().executeScript("PF('dlgPersonas').show();");
+    }
+    
     public void abrirAsistente() {
         String paso = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("opcion");
         PrimeFaces.current().executeScript("PF('wzRegistro').loadStep(PF('wzRegistro').cfg.steps[" + paso + "], false)");
@@ -436,15 +452,14 @@ public class RegistroBean {
                 clasificacion.setIdentificadorPrimarioDeLaEmpresa(currentEmpresa.getIdentificadorPrimarioDeLaEmpresa());
                 clasificacion.setEstadoDeEliminacion(0);
                 clasificacion.setFechaDeInsercion(new Date());
-                clasificacion.setTipoServicio(tipoServicio);
+                clasificacion.setTipoServicio(Arrays.toString(tipoServicio));
                 clasificacion.setName("admin");
                 
                 if (tipoServicio != null){
                     lstClasificacion.add(clasificacion);
                 }else{
                     JsfUtil.addErrorStyle("frmPrincipal", "tipoServicio", InputText.class, clasificacion.getTipoServicio());
-                }
-                    
+                }  
             }
 
             especificacion = false;
@@ -452,6 +467,8 @@ public class RegistroBean {
             idSubSector = null;
             subSector = null;
             espClasificacion = "";
+            tipoServicio = null;
+            
         }
     }
 
@@ -472,6 +489,11 @@ public class RegistroBean {
         lstSubSector = tmpLstSubSector;
         return lstSubSector;
     }
+    
+    public String getSector(Integer idSubSector) {
+        SectorEconomico sector = provBo.findSectorEconomico(idSubSector);
+        return sector.getDescripcionDelSectorEconomico();
+    }
 
     public void activarEspecificacion() {
         for (SectorEconomico ss : lstSubSector) {
@@ -487,7 +509,7 @@ public class RegistroBean {
             }
         }
     }
-
+    
     public Boolean isValidaPersona() {
         Boolean valido = true;
         if (currentPersona != null) {
@@ -1018,6 +1040,13 @@ public class RegistroBean {
     public void setDisableGuardar(Boolean disableGuardar) {
         this.disableGuardar = disableGuardar;
     }
-    
-    
+
+    public boolean isMostrarIVA() {
+        return mostrarIVA;
+    }
+
+    public void setMostrarIVA(boolean mostrarIVA) {
+        this.mostrarIVA = mostrarIVA;
+    }
+
 }
