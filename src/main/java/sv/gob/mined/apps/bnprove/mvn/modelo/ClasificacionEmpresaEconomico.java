@@ -21,7 +21,10 @@ public class ClasificacionEmpresaEconomico implements PersistenciaDao{
     private Date fechaDeModificacion;
     private Date fechaDeEliminacion;
     private Integer estadoDeEliminacion;
-    private String tipoServicio;
+    private Boolean tsBienes;
+    private Boolean tsServicios;
+    private Boolean tsObras;
+    private Boolean tsConsultoria;
     private String name;
     
 
@@ -100,34 +103,59 @@ public class ClasificacionEmpresaEconomico implements PersistenciaDao{
         this.identificadorPrimarioDeLaEmpresa = identificadorPrimarioDeLaEmpresa;
     }
 
-    public String getTipoServicio() {
-        return tipoServicio;
+    public Boolean getTsBienes() {
+        return tsBienes;
     }
 
-    public void setTipoServicio(String tipoServicio) {
-        this.tipoServicio = tipoServicio;
+    public void setTsBienes(Boolean tsBienes) {
+        this.tsBienes = tsBienes;
     }
+
+    public Boolean getTsServicios() {
+        return tsServicios;
+    }
+
+    public void setTsServicios(Boolean tsServicios) {
+        this.tsServicios = tsServicios;
+    }
+
+    public Boolean getTsObras() {
+        return tsObras;
+    }
+
+    public void setTsObras(Boolean tsObras) {
+        this.tsObras = tsObras;
+    }
+
+    public Boolean getTsConsultoria() {
+        return tsConsultoria;
+    }
+
+    public void setTsConsultoria(Boolean tsConsultoria) {
+        this.tsConsultoria = tsConsultoria;
+    }
+
    
     @Override
     public String generarInsertSQL() {
-        String query = "INSERT INTO dbo.ClasificacionEmpresaEconomico (identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, tipoServicio, name) VALUES (?,?,?,?,?,?,?,?,?);";
+        String query = "INSERT INTO dbo.ClasificacionEmpresaEconomico (identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, tsBienes, tsServicios, tsObras, tsConsultoria, name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
         return query;
     }
     
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, tipoServicio, name};
+        return new Object[]{identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, tsBienes, tsServicios, tsObras, tsConsultoria, name};
     }
 
     @Override
     public String generarUpdateSQL() {
-        String query = "update dbo.ClasificacionEmpresaEconomico SET identificadorPrimarioDeLaEmpresa=?, identificadorDelSectorEconomico=?, especializacionPorSubsector=?, fechaDeInsercion=?, fechaDeModificacion=?, fechaDeEliminacion=?, estadoDeEliminacion=?, tipoServicio=?, name=? WHERE identificadorClasificacionSectorEconomico=?";
+        String query = "update dbo.ClasificacionEmpresaEconomico SET identificadorPrimarioDeLaEmpresa=?, identificadorDelSectorEconomico=?, especializacionPorSubsector=?, fechaDeInsercion=?, fechaDeModificacion=?, fechaDeEliminacion=?, estadoDeEliminacion=?, tsBienes=?, tsServicios=?, tsObras=?, tsConsultoria=?, name=? WHERE identificadorClasificacionSectorEconomico=?";
         return query;
     }
     
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorClasificacionSectorEconomico, tipoServicio};
+        return new Object[]{identificadorPrimarioDeLaEmpresa, identificadorDelSectorEconomico, especializacionPorSubsector, fechaDeInsercion, fechaDeModificacion, fechaDeEliminacion, estadoDeEliminacion, name, identificadorClasificacionSectorEconomico, tsBienes, tsServicios, tsObras, tsConsultoria};
     }
 
 }

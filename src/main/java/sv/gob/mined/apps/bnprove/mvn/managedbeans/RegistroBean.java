@@ -83,7 +83,11 @@ public class RegistroBean {
     private Boolean especificacion = false;
     private Boolean disableGuardar = true;
     private SectorEconomico subSector;
-    private String[] tipoServicio;
+    private Boolean tsBienes = false;
+    private Boolean tsServicios = false;
+    private Boolean tsObras = false;
+    private Boolean tsConsultoria = false;
+    private ClasificacionEmpresaEconomico sectorBorrar;
     private String hostname, smtp_port, user, pass, remitente;
     /**
      * variables de funcionalidad
@@ -122,7 +126,7 @@ public class RegistroBean {
                 currentPersona = provBo.findPersonaById(idPersona);
                 //idDepto = currentPersona.getIdentificadorDelDepartamento();
                 currentEmpresa = provBo.findEmpresaByIdOferente(currentPersona.getIdentificadorPrimarioOferente());
-             
+
                 if (currentEmpresa == null) {
                     currentEmpresa = new Empresa();
                     currentEmpresa.setEsContribuyente(0);
@@ -140,7 +144,7 @@ public class RegistroBean {
                     this.cargarOferta(currentEmpresa.getIdentificadorPrimarioDeLaEmpresa());
                 }
             }
-           abrirInicial();
+            abrirInicial();
         }
     }
 
@@ -161,7 +165,6 @@ public class RegistroBean {
         lstClasificacion = provBo.findAllClasificacion(idEmpresa);
     }
 
-   
     public String getEstadoRegistro() {
         List<EstadoDeRegistro> lst = getLstEstadoRegistros();
         for (EstadoDeRegistro estadoDeRegistro : lst) {
@@ -218,34 +221,30 @@ public class RegistroBean {
 
     public void tipoDomicilio() {
         mostrarDeptoMunic = (!"SV".equals(currentEmpresa.getPais()));
-        
-        if (mostrarDeptoMunic){
+
+        if (mostrarDeptoMunic) {
             currentEmpresa.setIdentificadorDelDepartamento(16);
             currentEmpresa.setIdMunicipio(266);
-        }
-        else
-        {
+        } else {
             currentEmpresa.setIdentificadorDelDepartamento(0);
             currentEmpresa.setIdMunicipio(0);
-        } 
-        
+        }
+
     }
 
     public void tipoOrigen() {
         mostrarDeptoMunicPersona = (currentPersona.getIdentificadorOrigenlCiudadano() != 1);
-  
-        if (currentPersona.getIdentificadorOrigenlCiudadano() != 1){
+
+        if (currentPersona.getIdentificadorOrigenlCiudadano() != 1) {
             currentPersona.identificadorDelDepartamento = 16;
             currentPersona.idMunicipio = 266;
-        }
-        else
-        {
+        } else {
             currentPersona.identificadorDelDepartamento = 0;
             currentPersona.idMunicipio = 0;
-        } 
-        
+        }
+
     }
-    
+
     public void esContribuyente() {
         mostrarIVA = mostrarIVA != true;
     }
@@ -258,9 +257,10 @@ public class RegistroBean {
             currentEmpresa.setIdMunicipio(currentPersona.getIdMunicipio());
             currentEmpresa.setIdentificadorDelDepartamento(currentPersona.getIdentificadorDelDepartamento());
             currentEmpresa.setNumeroDeCelular(currentPersona.getNumeroCelular());
-            currentEmpresa.setNombreComercial(currentPersona.getPrimerNombre() + ' ' + currentPersona.getSegundoNombre() + ' ' + currentPersona.getPrimerApellido() + ' ' + currentPersona.getSegundoApellido()+ ' ' + currentPersona.getACasada());
-            currentEmpresa.setRazonSocial(currentPersona.getPrimerNombre() + ' ' + currentPersona.getSegundoNombre() + ' ' + currentPersona.getPrimerApellido() + ' ' + currentPersona.getSegundoApellido()+ ' ' + currentPersona.getACasada());
+            currentEmpresa.setNombreComercial(currentPersona.getPrimerNombre() + ' ' + currentPersona.getSegundoNombre() + ' ' + currentPersona.getPrimerApellido() + ' ' + currentPersona.getSegundoApellido() + ' ' + currentPersona.getACasada());
+            currentEmpresa.setRazonSocial(currentPersona.getPrimerNombre() + ' ' + currentPersona.getSegundoNombre() + ' ' + currentPersona.getPrimerApellido() + ' ' + currentPersona.getSegundoApellido() + ' ' + currentPersona.getACasada());
             currentEmpresa.setRegimenDeAdministracion(6);
+            mostrarPnlJuridica= false;
         } else {
             currentEmpresa.setDireccionCompleta("");
             currentEmpresa.setCorreoElectronico("");
@@ -271,15 +271,19 @@ public class RegistroBean {
             currentEmpresa.setNombreComercial("");
             currentEmpresa.setRazonSocial("");
             currentEmpresa.setRegimenDeAdministracion(1);
+            mostrarPnlJuridica = true;
         }
-        PrimeFaces.current().ajax().update("pnlPersoneria");
+        
+       
+        
+        //PrimeFaces.current().ajax().update("pnlPersoneria");
     }
 
-    public void abrirInicial(){
+    public void abrirInicial() {
         PrimeFaces.current().executeScript("PF('wzRegistro').loadStep(PF('wzRegistro').cfg.steps[0], false)");
         PrimeFaces.current().executeScript("PF('dlgPersonas').show();");
     }
-    
+
     public void abrirAsistente() {
         String paso = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("opcion");
         PrimeFaces.current().executeScript("PF('wzRegistro').loadStep(PF('wzRegistro').cfg.steps[" + paso + "], false)");
@@ -429,6 +433,11 @@ public class RegistroBean {
         }
     }
 
+    public void eliminarSector() {
+        lstClasificacion.remove(sectorBorrar);
+        JsfUtil.addSuccessMessage("Registro eliminado satisfactoriamente");
+    }
+
     public void agregarClasificacion() {
         if (idSector != null && idSector != 0 && idSubSector != null && idSubSector != 0) {
             Boolean existe = false;
@@ -452,23 +461,23 @@ public class RegistroBean {
                 clasificacion.setIdentificadorPrimarioDeLaEmpresa(currentEmpresa.getIdentificadorPrimarioDeLaEmpresa());
                 clasificacion.setEstadoDeEliminacion(0);
                 clasificacion.setFechaDeInsercion(new Date());
-                clasificacion.setTipoServicio(Arrays.toString(tipoServicio));
                 clasificacion.setName("admin");
-                
-                if (tipoServicio != null){
-                    lstClasificacion.add(clasificacion);
-                }else{
-                    JsfUtil.addErrorStyle("frmPrincipal", "tipoServicio", InputText.class, clasificacion.getTipoServicio());
-                }  
+                clasificacion.setTsBienes(tsBienes);
+                clasificacion.setTsServicios(tsServicios);
+                clasificacion.setTsObras(tsObras);
+                clasificacion.setTsConsultoria(tsConsultoria);
+                lstClasificacion.add(clasificacion);
             }
 
             especificacion = false;
             idSector = null;
             idSubSector = null;
             subSector = null;
+            tsBienes = null;
+            tsServicios = null;
+            tsObras = null;
+            tsConsultoria = null;
             espClasificacion = "";
-            tipoServicio = null;
-            
         }
     }
 
@@ -489,7 +498,7 @@ public class RegistroBean {
         lstSubSector = tmpLstSubSector;
         return lstSubSector;
     }
-    
+
     public String getSector(Integer idSubSector) {
         SectorEconomico sector = provBo.findSectorEconomico(idSubSector);
         return sector.getDescripcionDelSectorEconomico();
@@ -509,7 +518,7 @@ public class RegistroBean {
             }
         }
     }
-    
+
     public Boolean isValidaPersona() {
         Boolean valido = true;
         if (currentPersona != null) {
@@ -550,7 +559,7 @@ public class RegistroBean {
         }
         return valido;
     }
-    
+
     public void imprimir() {
         try {
             byte[] content;
@@ -582,52 +591,51 @@ public class RegistroBean {
 
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaOferente.jasper", param, jdbcTemplate.getDataSource().getConnection());
     }
-    
-    public static boolean validaNit( String nit ){//Creamos metodo estatico para poderlo llamar en cualquier parte; pedimos como datos una cadena string donde se aloja el nit
+
+    public static boolean validaNit(String nit) {//Creamos metodo estatico para poderlo llamar en cualquier parte; pedimos como datos una cadena string donde se aloja el nit
         int calculo = 0;//Variable para llevar el control de la suma del algoritmo
         int digitos = Integer.parseInt(nit.substring(12, 15));//Tomamos los digitos que estan entre la posicion 12 y 15
         boolean resultado;
-        
-        if ( digitos <= 100 ) {//Verificamos que estos digitos sean menores o iguales a 100
-            for ( int posicion = 0; posicion <= 14; posicion++ ) {//Ciclo que nos ayuda a ir aumentando la posicion que se utiliza posteriormente en el algoritmo
-                if ( !( posicion == 4 || posicion == 11 ) ){
-                    calculo += ( 14 * (int) ( Character.getNumericValue( nit.charAt( posicion ) ) ) );
+
+        if (digitos <= 100) {//Verificamos que estos digitos sean menores o iguales a 100
+            for (int posicion = 0; posicion <= 14; posicion++) {//Ciclo que nos ayuda a ir aumentando la posicion que se utiliza posteriormente en el algoritmo
+                if (!(posicion == 4 || posicion == 11)) {
+                    calculo += (14 * (int) (Character.getNumericValue(nit.charAt(posicion))));
                 }//Si la posicion no es 4 ni 11 (que son los guiones) se ejecuta esta operacion
-      
+
                 calculo = calculo % 11;//Al calculo se le va sacando el modular de 11
             }
         } else {
             int n = 1;//Variable contadora
-            
-            for ( int posicion = 0; posicion <= 14; posicion++ ){//Ciclo que nos ayuda a ir aumentando la posicion que se utiliza posteriormente en el algoritmo
-                if ( !( posicion == 4 || posicion == 11 ) ){
-                    calculo = (int) ( calculo + ( ( (int) Character.getNumericValue( nit.charAt( posicion ) ) ) * ( ( 3 + 6 * Math.floor( Math.abs( ( n + 4) / 6 ) ) ) - n ) ) );
+
+            for (int posicion = 0; posicion <= 14; posicion++) {//Ciclo que nos ayuda a ir aumentando la posicion que se utiliza posteriormente en el algoritmo
+                if (!(posicion == 4 || posicion == 11)) {
+                    calculo = (int) (calculo + (((int) Character.getNumericValue(nit.charAt(posicion))) * ((3 + 6 * Math.floor(Math.abs((n + 4) / 6))) - n)));
                     n++;
                 }//Si la posicion no es 4 ni 11 (que son los guiones) se ejecuta esta operacion
             }
-            
+
             calculo = calculo % 11;//sacamos el modular 11 de calculo
-            
-            if ( calculo > 1 ){
+
+            if (calculo > 1) {
                 calculo = 11 - calculo;//Si el resultado nos da mayor a uno se le resta a 11 esta respuesta
             } else {
                 calculo = 0;//Sino el calculo lo hacemos 0
             }
         }
-        resultado = (calculo == (int) ( Character.getNumericValue( nit.charAt( 16 ) ) ) ); //Verificamos si el calculo es direfente del resultado de nuestro algoritmo, si lo es entonces es falso
+        resultado = (calculo == (int) (Character.getNumericValue(nit.charAt(16)))); //Verificamos si el calculo es direfente del resultado de nuestro algoritmo, si lo es entonces es falso
 
         return resultado;//enviamos el resultado
     }
-  
-    
+
     public void ConfiguracionMail() {
-        hostname =    "aaa";
-        smtp_port =   "aaaaa";
-        user =        "aaa";
-        pass =        "aaa";
-        remitente =   "aaaa";
-    } 
-        
+        hostname = "aaa";
+        smtp_port = "aaaaa";
+        user = "aaa";
+        pass = "aaa";
+        remitente = "aaaa";
+    }
+
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().clear();
@@ -645,7 +653,7 @@ public class RegistroBean {
     public void setIdDepto(Integer idDepto) {
         this.idDepto = idDepto;
     }
-    
+
     public boolean isMostrarPnlJuridica() {
         return mostrarPnlJuridica;
     }
@@ -693,7 +701,7 @@ public class RegistroBean {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-    
+
     public Boolean getDisable() {
         return disable;
     }
@@ -705,7 +713,7 @@ public class RegistroBean {
     public void setArbol(DefaultTreeNode arbol) {
         this.arbol = arbol;
     }
-    
+
     public Persona getCurrentPersona() {
         if (currentPersona == null) {
             currentPersona = new Persona();
@@ -741,7 +749,7 @@ public class RegistroBean {
             return null;
         }
     }
-    
+
     public List<String> getDepartamentosUbicacion() {
         return departamentosUbicacion;
     }
@@ -921,7 +929,7 @@ public class RegistroBean {
     public String getEspClasificacion() {
         return espClasificacion;
     }
-    
+
     public List<CoberturaTerritorio> getLstCobertura() {
         if (lstCobertura == null) {
             lstCobertura = new ArrayList<>();
@@ -941,15 +949,38 @@ public class RegistroBean {
         this.especificacion = especificacion;
     }
 
-    public String[] getTipoServicio() {
-        return tipoServicio;
+    public Boolean getTsBienes() {
+        return tsBienes;
     }
 
-    public void setTipoServicio(String[] tipoServicio) {
-        this.tipoServicio = tipoServicio;
+    public void setTsBienes(Boolean tsBienes) {
+        this.tsBienes = tsBienes;
     }
 
-  
+    public Boolean getTsServicios() {
+        return tsServicios;
+    }
+
+    public void setTsServicios(Boolean tsServicios) {
+        this.tsServicios = tsServicios;
+    }
+
+    public Boolean getTsObras() {
+        return tsObras;
+    }
+
+    public void setTsObras(Boolean tsObras) {
+        this.tsObras = tsObras;
+    }
+
+    public Boolean getTsConsultoria() {
+        return tsConsultoria;
+    }
+
+    public void setTsConsultoria(Boolean tsConsultoria) {
+        this.tsConsultoria = tsConsultoria;
+    }
+
     public String getTituloWizard() {
         return tituloWizard;
     }
@@ -957,7 +988,7 @@ public class RegistroBean {
     public void setTituloWizard(String tituloWizard) {
         this.tituloWizard = tituloWizard;
     }
-    
+
     public void setLstCobertura(List<CoberturaTerritorio> lstCobertura) {
         this.lstCobertura = lstCobertura;
     }
@@ -977,7 +1008,7 @@ public class RegistroBean {
     public void setMostrarDeptoMunicPersona(boolean mostrarDeptoMunicPersona) {
         this.mostrarDeptoMunicPersona = mostrarDeptoMunicPersona;
     }
-    
+
     public Integer getIdEmpresa() {
         return idEmpresa;
     }
@@ -1048,5 +1079,15 @@ public class RegistroBean {
     public void setMostrarIVA(boolean mostrarIVA) {
         this.mostrarIVA = mostrarIVA;
     }
+
+    public ClasificacionEmpresaEconomico getSectorBorrar() {
+        return sectorBorrar;
+    }
+
+    public void setSectorBorrar(ClasificacionEmpresaEconomico sectorBorrar) {
+        this.sectorBorrar = sectorBorrar;
+    }
+    
+    
 
 }

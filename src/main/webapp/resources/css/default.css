@@ -58,6 +58,12 @@ ICONOS
     width:20px;
 }
 
+.borrar{
+    background:url('../images/eliminar.png')  no-repeat !important;
+    height:16px;
+    width:20px;
+}
+
 
 /*
 ESTILOS PARA TABLAS
