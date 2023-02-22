@@ -30,6 +30,7 @@ public class Usuario implements PersistenciaDao{
     private String name;
     private Integer idPregunta1;
     private Integer idPregunta2;
+    private Integer estadoDeContrasena;
 
     public Usuario() {
     }
@@ -174,6 +175,22 @@ public class Usuario implements PersistenciaDao{
         this.idPregunta2 = idPregunta2;
     }
 
+    public Integer getEstadoDeContrasena() {
+        return estadoDeContrasena;
+    }
+
+    public void setEstadoDeContrasena(Integer estadoDeContrasena) {
+        this.estadoDeContrasena = estadoDeContrasena;
+    }
+
+    
+
+    
+    
+    
+    
+    
+    
 
     @Override
     public String toString() {
@@ -193,12 +210,12 @@ public class Usuario implements PersistenciaDao{
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE dbo.usuario SET primerNombre=?, segundoNombre=?, primerApellido=?, segundoApellido=?, telefono=?, eMail=?, password=?, idPregunta1=?, respuesta1=?, idPregunta2=?, respuesta2=?, fechaInsercion=?, fechaModificacion=?, fechaEliminacion=?, estadoDeEliminacion=?, name =? WHERE userName=?";
+        return "UPDATE dbo.usuario SET primerNombre=?, segundoNombre=?, primerApellido=?, segundoApellido=?, telefono=?, eMail=?, password=?, idPregunta1=?, respuesta1=?, idPregunta2=?, respuesta2=?, fechaInsercion=?, fechaModificacion=?, fechaEliminacion=?, estadoDeEliminacion=?, name =?, estadoDeContrasena=? WHERE userName=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{primerNombre, segundoNombre, primerApellido, segundoApellido, telefono, eMail, password, idPregunta1, respuesta1, idPregunta2, respuesta2, fechaInsercion, fechaModificacion, fechaEliminacion, estadoDeEliminacion, name, userName};
+        return new Object[]{primerNombre, segundoNombre, primerApellido, segundoApellido, telefono, eMail, password, idPregunta1, respuesta1, idPregunta2, respuesta2, fechaInsercion, fechaModificacion, fechaEliminacion, estadoDeEliminacion, name, estadoDeContrasena, userName};
     }
     
 }

@@ -21,4 +21,11 @@ public interface UsuarioDao {
     public Usuario findUsuarioByEmail(String mail);
     
     public Boolean comprobarRespuestas(String userName, String respuesta1, String respuesta2);
+    
+    
+    Usuario buscarPorUsuario(String usurName);
+    
+      public void setUsuario(Usuario usu);
+      
+       public int updateUsuario(Usuario us);
 }

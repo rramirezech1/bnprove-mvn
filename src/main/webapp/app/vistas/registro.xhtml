@@ -198,16 +198,16 @@
                                         <h:outputText value="#{clasificacion.especializacionPorSubsector}" />
                                     </p:column>
                                     <p:column style="text-align: center; border-right-style: hidden;">
-                                        <p:selectBooleanCheckbox value="#{registroBean.tsBienes}" disabled="true"/>
+                                        <p:selectBooleanCheckbox value="#{clasificacion.tsBienes}" disabled="true"/>
                                     </p:column>
                                     <p:column style="text-align: center;  border-right-style: hidden;">
-                                        <p:selectBooleanCheckbox value="#{registroBean.tsServicios}" disabled="true"/>
+                                        <p:selectBooleanCheckbox value="#{clasificacion.tsServicios}" disabled="true"/>
                                     </p:column>
                                     <p:column style="text-align: center;  border-right-style: hidden;">
-                                        <p:selectBooleanCheckbox value="#{registroBean.tsObras}" disabled="true"/>
+                                        <p:selectBooleanCheckbox value="#{clasificacion.tsObras}" disabled="true"/>
                                     </p:column>
                                     <p:column  style="text-align: center">
-                                        <p:selectBooleanCheckbox value="#{registroBean.tsConsultoria}" disabled="true"/>
+                                        <p:selectBooleanCheckbox value="#{clasificacion.tsConsultoria}" disabled="true"/>
                                     </p:column>
                                     <p:column width="3%" style="text-align: center">
                                         <p:commandButton class="ui-button-warning rounded-button" icon="borrar" process="@this" oncomplete="PF('delSectorDlg').show()" >

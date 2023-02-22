@@ -11,6 +11,7 @@ package sv.gob.mined.apps.bnprove.mvn.dao;
 public interface PersistenciaDao {
 
     public String generarInsertSQL();
+    
 
     public Object[] getDatosInsert();
 

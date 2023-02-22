@@ -439,6 +439,7 @@ public class RegistroBean {
     }
 
     public void agregarClasificacion() {
+       //lstClasificacion= new ArrayList<>();
         if (idSector != null && idSector != 0 && idSubSector != null && idSubSector != 0) {
             Boolean existe = false;
             for (ClasificacionEmpresaEconomico cla : getLstClasificacion()) {
@@ -466,7 +467,9 @@ public class RegistroBean {
                 clasificacion.setTsServicios(tsServicios);
                 clasificacion.setTsObras(tsObras);
                 clasificacion.setTsConsultoria(tsConsultoria);
+               
                 lstClasificacion.add(clasificacion);
+                
             }
 
             especificacion = false;

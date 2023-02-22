@@ -105,4 +105,32 @@ public class PersonaDaoImpl extends XJdbcTemplate implements PersonaDao {
     public void setOferente(OferenteDeBienesYServicios oferente) {
         this.oferente = oferente;
     }
+    
+    @Override
+    public Persona buscarPorDui(String numeroDocumentoLegal){
+         System.out.println("Estoy en 05");
+        System.out.println("La persona recibida es: " + numeroDocumentoLegal);
+        String sql = "SELECT * FROM Persona WHERE numeroDocumentoLegal = '" + numeroDocumentoLegal + "'";
+        List<Persona> lst = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Persona.class));
+        if (lst != null && lst.size() > 0) {
+            return lst.get(0);
+        } else {
+            return null;
+        }
+    }
+ 
+    @Override
+    public Persona buscarPorUserName(String buscarPorUserName){
+         System.out.println("Estoy en 05");
+        System.out.println("La persona recibida es: " + buscarPorUserName);
+        String sql = "SELECT * FROM Persona WHERE userName = '" + buscarPorUserName + "'";
+        List<Persona> lst = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Persona.class));
+        if (lst != null && lst.size() > 0) {
+            return lst.get(0);
+        } else {
+            return null;
+        }
+    }
+    
+    
 }

@@ -25,4 +25,11 @@ public interface PersonaDao {
     public Persona findPersonaByUsuarioClave(String usuario, String clave);
 
     public Boolean findPersonaByUsuario(String usuario);
+    
+    public Persona buscarPorDui(String numeroDocumentoLegal);
+    
+    public Persona buscarPorUserName(String buscarPorUserName);
+    
+    
+    
 }

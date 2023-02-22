@@ -93,4 +93,13 @@ public interface ProveedoresBo {
     
     public Boolean isExistPersonaByUsuario(String usuario);
     
+    Usuario buscarPorUsuario(String usuaName);
+    
+    Persona buscarPorDui(String numeroDocumentoLegal);
+    
+    Persona buscarPorUserName(String userName);
+    
+    public int updateUsuario(Usuario usu);
+    
+    
 }

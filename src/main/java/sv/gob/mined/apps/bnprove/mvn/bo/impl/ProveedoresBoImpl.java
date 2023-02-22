@@ -85,6 +85,8 @@ public class ProveedoresBoImpl implements ProveedoresBo {
     PreguntaValidaUsuarioDao preguntaValida;
     @Autowired
     UsuarioDao usuario;
+    @Autowired
+    PersonaDao personaDos;
 
     @Override
     public List<Departamento> findAllDepartamentos() {
@@ -176,7 +178,12 @@ public class ProveedoresBoImpl implements ProveedoresBo {
             return persona.create();
         }
     }
-
+    
+   
+    
+    
+    
+    
     @Override
     public Persona findPersonaByUsuarioClave(String usuario, String clave) {
         return persona.findPersonaByUsuarioClave(usuario, clave);
@@ -251,6 +258,16 @@ public class ProveedoresBoImpl implements ProveedoresBo {
         
         return persona.create();
     }
+    
+     @Override
+    public int updateUsuario(Usuario usu) {
+        int i=usuario.updateUsuario(usu);
+        return i;
+    }
+
+    
+    
+    
 
     @Override
     public List<PreguntaValidaUsuario> findAllPreguntasExcepto(Integer id) {
@@ -281,4 +298,30 @@ public class ProveedoresBoImpl implements ProveedoresBo {
     public Usuario findUsuarioByEmail(String mail) {
         return usuario.findUsuarioByEmail(mail);
     }
+    
+    @Override
+    public Usuario buscarPorUsuario(String usurName) {
+        System.out.println("Estoy en 02");
+        return usuario.buscarPorUsuario(usurName);
+    }
+    
+    @Override
+    public Persona buscarPorDui(String numeroDocumentoLegal) {
+
+       
+
+        return personaDos.buscarPorDui(numeroDocumentoLegal);
+    }
+
+
+@Override
+    public Persona buscarPorUserName(String userName) {
+
+       
+
+        return personaDos.buscarPorDui(userName);
+    }    
+    
+    
 }
+
